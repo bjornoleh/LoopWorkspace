@@ -1,7 +1,7 @@
 [submodule "Loop"]
 	path = Loop
 	url=https://github.com/bjornoleh/Loop.git
-	branch = bo
+	branch = 174revertCarbsOnBadge
 [submodule "LoopKit"]
 	path = LoopKit
 	url = https://github.com/LoopKit/LoopKit.git
