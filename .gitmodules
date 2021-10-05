@@ -1,10 +1,11 @@
 [submodule "Loop"]
 	path = Loop
-	url=https://github.com/loopnlearn/Loop.git
-	branch = freeaps
+	url=https://github.com/bjornoleh/Loop.git
+	branch = Loop-mods
 [submodule "LoopKit"]
 	path = LoopKit
-	url = https://github.com/LoopKit/LoopKit.git
+	url = https://github.com/bjornoleh/LoopKit.git
+	branch = Neg-IOB_override
 [submodule "CGMBLEKit"]
 	path = CGMBLEKit
 	url = https://github.com/LoopKit/CGMBLEKit.git
@@ -19,7 +20,8 @@
 	url = https://github.com/LoopKit/G4ShareSpy.git
 [submodule "rileylink_ios"]
 	path = rileylink_ios
-	url = https://github.com/ps2/rileylink_ios.git
+	url = https://github.com/bjornoleh/rileylink_ios.git
+	branch = EL+OL_patch_Loop_release_v2.2.5
 [submodule "Amplitude-iOS"]
 	path = Amplitude-iOS
 	url = https://github.com/LoopKit/Amplitude-iOS.git
