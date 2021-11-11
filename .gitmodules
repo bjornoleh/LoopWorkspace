@@ -4,7 +4,7 @@
 	branch = Crowdin
 [submodule "LoopKit"]
 	path = LoopKit
-	url=https://github.com/Jon-b-m/LoopKit.git
+	url = https://github.com/Jon-b-m/LoopKit.git
 	branch = Crowdin
 [submodule "CGMBLEKit"]
 	path = CGMBLEKit
