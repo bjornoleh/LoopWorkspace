@@ -1,11 +1,11 @@
 [submodule "Loop"]
 	path = Loop
 	url=https://github.com/bjornoleh/Loop.git
-	branch = Loop-mods
+	branch = Loop-mods-Crowdin
 [submodule "LoopKit"]
 	path = LoopKit
 	url = https://github.com/bjornoleh/LoopKit.git
-	branch = Neg-IOB_override
+	branch = Crowdin-NegIOB-override
 [submodule "CGMBLEKit"]
 	path = CGMBLEKit
 	url = https://github.com/LoopKit/CGMBLEKit.git
