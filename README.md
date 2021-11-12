@@ -5,7 +5,7 @@ There are so many people who rely on the FreeAPS fork of Loop that it has been f
 Ivan - the originator of the FreeAPS project (ivalkou github site) has frozen his repository. All the forces of Ivan's team are aimed at developing a new project FreeAPS X based on OpenAPS.
 
 # Crowdin
-This branch is up-to-date with the latest updates from loopnlearn and translations from Crowdin (https://crowdin.com/project/freeaps-settings).
+This branch is up-to-date with translations from Crowdin (https://crowdin.com/project/freeaps-settings) and the latest updates from loopnlearn.
 
 <a title="Crowdin" target="_blank" href="https://crowdin.com/project/freeaps-settings"><img src="https://badges.crowdin.net/freeaps-settings/localized.svg"></a>
 
