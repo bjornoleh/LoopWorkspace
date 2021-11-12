@@ -20,8 +20,8 @@
 	url = https://github.com/LoopKit/G4ShareSpy.git
 [submodule "rileylink_ios"]
 	path = rileylink_ios
-	url = https://github.com/bjornoleh/rileylink_ios.git
-	branch = EL+OL_patch_Loop_release_v2.2.5
+	url = https://github.com/Jon-b-m/rileylink_ios.git
+	branch = Crowdin
 [submodule "Amplitude-iOS"]
 	path = Amplitude-iOS
 	url = https://github.com/LoopKit/Amplitude-iOS.git
@@ -35,4 +35,4 @@
 [submodule "xdrip-client-swift"]
 	path = xdrip-client-swift
 	url = https://github.com/alekst1d/xdrip-client-swift
-        branch = master
+    branch = master
