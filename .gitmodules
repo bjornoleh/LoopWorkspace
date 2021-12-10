@@ -14,14 +14,13 @@
 	url = https://github.com/i-schuetz/SwiftCharts.git
 [submodule "dexcom-share-client-swift"]
 	path = dexcom-share-client-swift
-	url = https://github.com/LoopKit/dexcom-share-client-swift.git
+	url = https://github.com/loopnlearn/dexcom-share-client-swift.git
 [submodule "G4ShareSpy"]
 	path = G4ShareSpy
 	url = https://github.com/LoopKit/G4ShareSpy.git
 [submodule "rileylink_ios"]
 	path = rileylink_ios
-	url = https://github.com/bjornoleh/rileylink_ios.git
-	branch = EL+OL_patch_Loop_release_v2.2.5
+	url = https://github.com/loopnlearn/rileylink_ios.git
 [submodule "Amplitude-iOS"]
 	path = Amplitude-iOS
 	url = https://github.com/LoopKit/Amplitude-iOS.git
@@ -34,5 +33,5 @@
 	url = https://github.com/ivalkou/NightscoutAPIClient.git
 [submodule "xdrip-client-swift"]
 	path = xdrip-client-swift
-	url = https://github.com/alekst1d/xdrip-client-swift
+	url = https://github.com/loopnlearn/xdrip-client-swift
         branch = master
