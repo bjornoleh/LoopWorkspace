@@ -35,6 +35,9 @@
       location = "group:xdrip-client-swift/xDripClient.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:xdrip-client-swift-right/xDripClientRight.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:AdditionalWatchAssets.xcassets">
    </FileRef>
    <FileRef
