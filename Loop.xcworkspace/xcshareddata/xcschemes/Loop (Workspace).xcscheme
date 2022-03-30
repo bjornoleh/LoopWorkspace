@@ -407,7 +407,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "43A8EC81210E664300A81379"
-               BuildableName = "xDripClientUI.framework"
+               BuildableName = "xDripClientRightUI.framework"
                BlueprintName = "xDripClientRightUI"
                ReferencedContainer = "container:xdrip-client-swift-right/xDripClientRight.xcodeproj">
             </BuildableReference>
