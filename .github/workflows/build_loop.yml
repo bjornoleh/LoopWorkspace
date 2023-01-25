@@ -22,7 +22,7 @@ jobs:
       
       # Build signed Loop IPA file
       - name: Fastlane Build & Archive
-        run: fastlane build_loop
+        run: fastlane loop_build
         env:
           TEAMID: ${{ secrets.TEAMID }}
           GH_PAT: ${{ secrets.GH_PAT }}
@@ -33,7 +33,7 @@ jobs:
       
       # Upload to TestFlight
       - name: Fastlane upload to TestFlight
-        run: fastlane release
+        run: fastlane loop_release
         env:
           TEAMID: ${{ secrets.TEAMID }}
           GH_PAT: ${{ secrets.GH_PAT }}

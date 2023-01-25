@@ -29,9 +29,6 @@
       location = "group:AmplitudeService/AmplitudeService.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Amplitude-iOS/Amplitude.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:LogglyService/LogglyService.xcodeproj">
    </FileRef>
    <FileRef
@@ -60,5 +57,8 @@
    </FileRef>
    <FileRef
       location = "group:LoopOnboarding/LoopOnboarding.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:LoopOnboarding/../LoopCaregiver/LoopCaregiver.xcodeproj">
    </FileRef>
 </Workspace>
