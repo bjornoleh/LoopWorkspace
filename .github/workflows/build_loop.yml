@@ -6,17 +6,21 @@ on:
   ## Remove the "#" sign from the beginning of the line below to get automated builds on push (code changes in your repository)
   #push:
 
-  ## Remove the "#" sign from the beginning of the two lines below to get automated builds every two months
+  ## Remove the "#" sign from the beginning of the two lines below to get automated builds every month
   #schedule:
-    #- cron: '0 17 1 */2 *' # Runs at 17:00 UTC on the 1st in Jan, Mar, May, Jul, Sep and Nov.
+    #- cron: '0 17 1 * *' # Runs at 17:00 UTC on the 1st in every month.
 
 jobs:
   secrets:
     uses: ./.github/workflows/validate_secrets.yml
     secrets: inherit
     
+  upstream_sync:
+    uses: ./.github/workflows/upstream_sync.yml
+    secrets: inherit
+    
   build:
-    needs: secrets
+    needs: [secrets, upstream_sync]
     runs-on: macos-12
     steps:
       # Uncomment to manually select latest Xcode if needed
@@ -28,6 +32,9 @@ jobs:
         uses: actions/checkout@v3
         with:
           submodules: recursive
+      - uses: gautamkrishnar/keepalive-workflow@v1 # using the workflow with default settings
+        with:
+          time_elapsed: 29 # Time elapsed from the previous commit to trigger a new automated commit (in days)
       
       # Patch Fastlane Match to not print tables
       - name: Patch Match Tables
