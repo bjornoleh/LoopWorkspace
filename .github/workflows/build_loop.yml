@@ -35,7 +35,7 @@ jobs:
           ref: main # specify branch here to allow builds of any default or non-default branch name (must run from default branch for scheduled builds)
       - uses: gautamkrishnar/keepalive-workflow@v1 # using the workflow with default settings
         with:
-          time_elapsed: 29 # Time elapsed from the previous commit to trigger a new automated commit (in days)
+          time_elapsed: 27 # Time elapsed from the previous commit to trigger a new automated commit (in days)
       
       # Patch Fastlane Match to not print tables
       - name: Patch Match Tables
