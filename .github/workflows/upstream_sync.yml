@@ -22,7 +22,7 @@ jobs:
         # optional: set the branch to checkout,
         # sync action checks out your 'target_sync_branch' anyway
         ref: main
-        submodules: recursive
+        #submodules: recursive
         # REQUIRED if your upstream repo is private (see wiki)
         persist-credentials: false
 
@@ -33,6 +33,8 @@ jobs:
       uses: aormsby/Fork-Sync-With-Upstream-action@v3.4
       with:
         target_sync_branch: main
+        target_branch_checkout_args: --recurse-submodules
+        shallow_since: 3 months ago
         # REQUIRED 'target_repo_token' exactly like this!
         target_repo_token: ${{ secrets.GH_PAT }}
         upstream_sync_branch: main
