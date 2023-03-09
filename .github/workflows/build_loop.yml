@@ -61,9 +61,6 @@ jobs:
       
     - name: Show value of 'has_new_commits'
       run: echo ${{ steps.sync.outputs.has_new_commits }}
-  upstream_sync:
-    uses: ./.github/workflows/upstream_sync.yml
-    secrets: inherit
     
   build:
     needs: [secrets, upstream_sync]
