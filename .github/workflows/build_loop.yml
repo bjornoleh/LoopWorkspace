@@ -33,9 +33,6 @@ jobs:
         with:
           submodules: recursive
           ref: ${{ env.TARGET_BRANCH }} 
-      - uses: gautamkrishnar/keepalive-workflow@v1 # using the workflow with default settings
-        with:
-          time_elapsed: 27 # Time elapsed from the previous commit to trigger a new automated commit (in days)
       
       # Run the sync action
       - name: Sync upstream changes
@@ -64,6 +61,11 @@ jobs:
       
       - name: Show value of 'has_new_commits'
         run: echo ${{ steps.sync.outputs.has_new_commits }}
+        
+      - uses: gautamkrishnar/keepalive-workflow@v1 # using the workflow with default settings
+        with:
+          time_elapsed: 27 # Time elapsed from the previous commit to trigger a new automated commit (in days)
+      
     
       # Patch Fastlane Match to not print tables
       - name: Patch Match Tables
