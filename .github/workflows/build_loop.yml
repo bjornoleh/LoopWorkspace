@@ -1,4 +1,4 @@
-name: 4. Build Loop 
+name: 4. Build Loop
 run-name: Build Loop
 on:
   workflow_dispatch:
@@ -13,14 +13,13 @@ env:
   UPSTREAM_REPO: LoopKit/LoopWorkspace
   UPSTREAM_BRANCH: main
   TARGET_BRANCH: main
-  
 
 jobs:
   secrets:
     uses: ./.github/workflows/validate_secrets.yml
     secrets: inherit
    
-  sync_latest_from_upstream:
+  upstream_sync:
     runs-on: ubuntu-latest
     name: Sync latest commits from upstream repo
 
