@@ -16,9 +16,9 @@ env:
   SYNC_UPSTREAM: 'true' # set to 'false' or 'true' to disable / enable syncing of fork with upstream repository
 
 jobs:
-  #secrets:
-    uses: ./.github/workflows/validate_secrets.yml
-    secrets: inherit
+  # secrets:
+    # uses: ./.github/workflows/validate_secrets.yml
+    # secrets: inherit
 
   upstream_sync_and_build:
     #needs: [secrets]
