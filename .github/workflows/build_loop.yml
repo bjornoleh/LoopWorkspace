@@ -71,7 +71,7 @@ jobs:
       # Customize Loop: Download and apply patches
       - name: Customize Loop
         # Submodule Loop patches:
-        run: 
+        run: |
           wget https://github.com/bjornoleh/Loop/commit/bbcf523f918fdd3ed3403a21df991f8de19c75ad.patch -P ./#{GITHUB_WORKSPACE}/Loop
           git apply ./#{GITHUB_WORKSPACE}/Loop/bbcf523f918fdd3ed3403a21df991f8de19c75ad.patch -v --whitespace=fix
 
