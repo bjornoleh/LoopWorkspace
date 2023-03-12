@@ -72,7 +72,7 @@ jobs:
       - name: Customize Loop
         # Submodule Loop patches:
         run: |
-          wget -qO- https://github.com/bjornoleh/Loop/commit/bbcf523f918fdd3ed3403a21df991f8de19c75ad.patch | git apply —directory=Loop -v --whitespace=fix
+          wget -qO- https://github.com/bjornoleh/Loop/commit/bbcf523f918fdd3ed3403a21df991f8de19c75ad.patch | git apply —directory=./#{GITHUB_WORKSPACE}/Loop -v --whitespace=fix
 
         # Submodule OmniBLE patches:
         
