@@ -14,7 +14,7 @@ env:
   UPSTREAM_BRANCH: main
   TARGET_BRANCH: main
   SYNC_UPSTREAM: 'true' # set to 'false' or 'true' to disable / enable syncing of fork with upstream repository
-  CUSTOMIZE_APP: 'false' # apply code customizations ('false / 'true')
+  CUSTOMIZE_APP: 'true' # apply code customizations ('false / 'true')
 
 jobs:
   # secrets:
