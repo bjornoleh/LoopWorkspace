@@ -14,6 +14,7 @@ env:
   UPSTREAM_BRANCH: main
   TARGET_BRANCH: main
   SYNC_UPSTREAM: 'true' # set to 'false' or 'true' to disable / enable syncing of fork with upstream repository
+  CUSTOMIZE_APP: 'false' # apply code customizations ('false / 'true')
 
 jobs:
   # secrets:
@@ -70,6 +71,7 @@ jobs:
       
       # Customize Loop: Download and apply patches
       - name: Customize Loop
+        if: ${{ env.CUSTOMIZE_APP == 'true'}}
         # Submodule Loop patches:
         run: |
           wget -qO- https://github.com/bjornoleh/Loop/commit/bbcf523f918fdd3ed3403a21df991f8de19c75ad.patch | git apply --directory=Loop -v --whitespace=fix
