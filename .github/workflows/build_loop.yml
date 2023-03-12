@@ -71,8 +71,9 @@ jobs:
       # Customize Loop: Download and apply patches
       - name: Customize Loop
         # Submodule Loop patches:
-        run: wget https://github.com/bjornoleh/Loop/commit/bbcf523f918fdd3ed3403a21df991f8de19c75ad.patch -P ./#{GITHUB_WORKSPACE}/Loop | git apply -v --index --whitespace=fix
-        
+        run: |
+          wget -qO- https://github.com/bjornoleh/Loop/commit/bbcf523f918fdd3ed3403a21df991f8de19c75ad.patch | git apply —directory=Loop -v --whitespace=fix
+
         # Submodule OmniBLE patches:
         
         # Submodule RileyLink_iOS patches:
