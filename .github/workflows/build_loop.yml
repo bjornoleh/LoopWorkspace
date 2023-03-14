@@ -74,10 +74,11 @@ jobs:
         if: ${{ env.CUSTOMIZE_APP == 'true'}}
         
         run: |
-        
+
           # LoopWorkspace patches
-          #git apply ./patches/mychanges.patch -v --whitespace=fix
-          patch -p1 < ./patches/mychanges.patch
+          if $(ls ./patches/*.patch &> /dev/null); then
+          git apply ./patches/*.patch -v --whitespace=fix
+          fi
         
           # Submodule Loop patches:
         
