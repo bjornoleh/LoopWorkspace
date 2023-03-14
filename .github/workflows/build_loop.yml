@@ -82,7 +82,8 @@ jobs:
         
           # Submodule Loop patches:
         
-          wget -qO- https://github.com/bjornoleh/Loop/commit/bbcf523f918fdd3ed3403a21df991f8de19c75ad.patch | git apply --directory=Loop -v --whitespace=fix
+          #wget -qO- https://github.com/bjornoleh/Loop/commit/bbcf523f918fdd3ed3403a21df991f8de19c75ad.patch | git apply --directory=Loop -v --whitespace=fix
+          wget -qO- https://github.com/bjornoleh/Loop/commit/b1d3810146edb4c3515919edce5be1bbc716ee7d.patch | git apply --directory=Loop -v --whitespace=fix # CarbEntryViewController.swift: 3 hours future carbs
 
           # Submodule OmniBLE patches:
         
