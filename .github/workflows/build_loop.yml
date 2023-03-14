@@ -76,7 +76,8 @@ jobs:
         run: |
         
           # LoopWorkspace patches
-          git apply ./patches/mychanges.patch -v --whitespace=fix
+          #git apply ./patches/mychanges.patch -v --whitespace=fix
+          patch -p1 < ./patches/mychanges.patch
         
           # Submodule Loop patches:
         
