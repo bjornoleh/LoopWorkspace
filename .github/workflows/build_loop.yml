@@ -14,7 +14,7 @@ env:
   UPSTREAM_BRANCH: main
   TARGET_BRANCH: main
   SYNC_UPSTREAM: 'true' # set to 'false' or 'true' to disable / enable syncing of fork with upstream repository
-  CUSTOMIZE_APP: 'true' # apply code customizations ('false / 'true')
+  CUSTOMIZE_APP: 'true' # apply code customizations from patch files in LoopWorkspace/patches/ and/or individual submoduke patches specified under 'name: Customize Loop' ('false / 'true')
 
 jobs:
   # secrets:
@@ -76,21 +76,24 @@ jobs:
         run: |
 
           # LoopWorkspace patches
+          # -applies any patches located in LoopWorkspace/patches/
           if $(ls ./patches/*.patch &> /dev/null); then
           git apply ./patches/*.patch -v --whitespace=fix
           fi
-        
-          # Submodule Loop patches:
-        
-          #wget -qO- https://github.com/bjornoleh/Loop/commit/bbcf523f918fdd3ed3403a21df991f8de19c75ad.patch | git apply --directory=Loop -v --whitespace=fix
-          wget -qO- https://github.com/bjornoleh/Loop/commit/b1d3810146edb4c3515919edce5be1bbc716ee7d.patch | git apply --directory=Loop -v --whitespace=fix # CarbEntryViewController.swift: 3 hours future carbs
 
-          # Submodule OmniBLE patches:
-        
-          # Submodule RileyLink_iOS patches:
+          # Submodule Loop patches:
+          # Template for customizing submodule Loop based on Loop and Learn "Apply CustomTypeOne LoopPatches"
+          #wget -qO- https://github.com/loopnlearn/Loop/commit/b3ba20892fb4f516d4d53c73a51ffbc80960ce3f.patch | git apply --directory=Loop -v --whitespace=fix
           
-          # ... etcetera
-    
+          # Submodule LoopKit patches:
+          # Template for customizing submodule LoopKit based on Loop and Learn "Apply CustomTypeOne LoopPatches"
+          #wget -qO- https://github.com/loopnlearn/LoopKit/commit/21816dfe073c871c2a580c9c352d6e9072a730be.patch | git apply --directory=LoopKit -v --whitespace=fix
+          
+          # Add patches to other submodiles following the templates above, 
+          # and specify the submodule by setting the correct '--directory=(submodule_name)'
+          
+          
+          
       # Patch Fastlane Match to not print tables
       - name: Patch Match Tables
         run: find /usr/local/lib/ruby/gems -name table_printer.rb | xargs sed -i "" "/puts(Terminal::Table.new(params))/d"
