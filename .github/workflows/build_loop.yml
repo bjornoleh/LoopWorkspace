@@ -76,21 +76,23 @@ jobs:
         run: |
 
           # LoopWorkspace patches
-          # -applies any patches located in LoopWorkspace/patches/
+          # -applies any patches located in the LoopWorkspace/patches/ directory.
           if $(ls ./patches/*.patch &> /dev/null); then
           git apply ./patches/*.patch -v --whitespace=fix
           fi
 
           # Submodule Loop patches:
-          # Template for customizing submodule Loop based on Loop and Learn "Apply CustomTypeOne LoopPatches"
+          # Template for customizing submodule Loop based on Loop and Learn "Apply CustomTypeOne LoopPatches":
           wget -qO- https://github.com/loopnlearn/Loop/commit/b3ba20892fb4f516d4d53c73a51ffbc80960ce3f.patch | git apply --directory=Loop -v --whitespace=fix
           
           # Submodule LoopKit patches:
-          # Template for customizing submodule LoopKit based on Loop and Learn "Apply CustomTypeOne LoopPatches"
+          # Template for customizing submodule LoopKit based on Loop and Learn "Apply CustomTypeOne LoopPatches":
           wget -qO- https://github.com/loopnlearn/LoopKit/commit/21816dfe073c871c2a580c9c352d6e9072a730be.patch | git apply --directory=LoopKit -v --whitespace=fix
           
-          # Add patches to other submodiles following the templates above, 
-          # and specify the submodule by setting the correct '--directory=(submodule_name)'
+          # Add patches for customization of additional submodules by following the templates above, 
+          # and make sure to specify the submodule by setting '--directory=(submodule_name)'.
+          # Several patches may be added per submodule.
+          # Adding comments (#) may be useful to easily tell the individual patches apart.
           
           
           
