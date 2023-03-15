@@ -77,9 +77,10 @@ jobs:
         run: |
 
           # LoopWorkspace patches
-          # -applies any patches located in the LoopWorkspace/patches/ directory
-          if $(ls ./patches/* &> /dev/null); then
-          git apply ./patches/* --exclude=save_patches_here.md --allow-empty -v --whitespace=fix
+          # Applies any patches located in the LoopWorkspace/patches/ directory
+          shopt -s extglob
+          if $(ls ./patches/!(*@(.cmd|.md|.sh)) &> /dev/null); then
+            git apply ./patches/!(*@(.cmd|.md|.sh)) -v --whitespace=fix
           fi
 
           # Submodule Loop patches:
