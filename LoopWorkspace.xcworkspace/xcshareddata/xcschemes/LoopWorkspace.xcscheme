@@ -140,20 +140,6 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "43C246921D8918AE0031F8D1"
-               BuildableName = "Crypto.framework"
-               BlueprintName = "Crypto"
-               ReferencedContainer = "container:rileylink_ios/RileyLink.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "C136AA5D231187B0008A320D"
                BuildableName = "MinimedKitPlugin.loopplugin"
                BlueprintName = "MinimedKitPlugin"
@@ -467,16 +453,6 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C1B383131CD0665D00CE7782"
-               BuildableName = "NightscoutUploadKitTests.xctest"
-               BlueprintName = "NightscoutUploadKitTests"
-               ReferencedContainer = "container:rileylink_ios/RileyLink.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "431CE7761F98564200255374"
                BuildableName = "RileyLinkBLEKitTests.xctest"
                BlueprintName = "RileyLinkBLEKitTests"
@@ -511,6 +487,16 @@
                BuildableName = "LoopTests.xctest"
                BlueprintName = "LoopTests"
                ReferencedContainer = "container:Loop/Loop.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "1DEE226824A676A300693C32"
+               BuildableName = "LoopKitHostedTests.xctest"
+               BlueprintName = "LoopKitHostedTests"
+               ReferencedContainer = "container:LoopKit/LoopKit.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
