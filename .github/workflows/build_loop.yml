@@ -9,6 +9,7 @@ on:
   ## Remove the "#" sign from the beginning of the two lines below to get automated builds every month
   #schedule:
     #- cron: '0 17 1 * *' # Runs at 17:00 UTC on the 1st in every month.
+
 env:
   UPSTREAM_REPO: LoopKit/LoopWorkspace
   UPSTREAM_BRANCH: main
@@ -17,12 +18,12 @@ env:
   CUSTOMIZE_APP: 'true' # apply code customizations from patch files in LoopWorkspace/patches/ and/or individual submodule patches specified under 'name: Customize Loop' ('false / 'true')
 
 jobs:
-  # secrets:
-    # uses: ./.github/workflows/validate_secrets.yml
-    # secrets: inherit
+   secrets:
+     uses: ./.github/workflows/validate_secrets.yml
+     secrets: inherit
 
   upstream_sync_and_build:
-    #needs: [secrets]
+    needs: [secrets]
     runs-on: macos-12
     steps:
       # Uncomment to manually select latest Xcode if needed
@@ -76,24 +77,27 @@ jobs:
         run: |
 
           # LoopWorkspace patches
-          # -applies any patches located in the LoopWorkspace/patches/ directory.
-          if $(ls ./patches/*.patch &> /dev/null); then
-          git apply ./patches/*.patch -v --whitespace=fix
+          # -applies any patches located in the LoopWorkspace/patches/ directory
+          if $(ls ./patches/* &> /dev/null); then
+          git apply ./patches/* -v --whitespace=fix
           fi
 
           # Submodule Loop patches:
-          # Template for customizing submodule Loop based on "CustomTypeOne/LoopPatches":
-          wget -qO- https://raw.githubusercontent.com/CustomTypeOne/LoopPatches/main/LoopPatch.txt | git apply --directory=Loop -v --whitespace=fix
+          # Template for customizing submodule Loop based on CustomTypeOne/LoopPatches (remove the "#" sign from the beginning of the line below to activate):
+          #wget -qO- https://raw.githubusercontent.com/CustomTypeOne/LoopPatches/main/LoopPatch.txt | git apply --directory=Loop -v --whitespace=fix
           
           # Submodule LoopKit patches:
-          # Template for customizing submodule LoopKit based on "CustomTypeOne/LoopPatches":
-          wget -qO- https://raw.githubusercontent.com/CustomTypeOne/LoopPatches/main/LoopkitPatch.txt | git apply --directory=LoopKit -v --whitespace=fix
+          # Template for customizing submodule LoopKit based on CustomTypeOne/LoopPatches (remove the "#" sign from the beginning of the line below to activate):
+          #wget -qO- https://raw.githubusercontent.com/CustomTypeOne/LoopPatches/main/LoopkitPatch.txt | git apply --directory=LoopKit -v --whitespace=fix
           
+
+          # Submodule xxxxx patches:
+
           # Add patches for customization of additional submodules by following the templates above, 
           # and make sure to specify the submodule by setting '--directory=(submodule_name)'.
           # Several patches may be added per submodule.
           # Adding comments (#) may be useful to easily tell the individual patches apart.
-          
+          # All customizations can be disabled by setting env SYNC_UPSTREAM: 'false'
           
           
       # Patch Fastlane Match to not print tables
