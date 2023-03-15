@@ -82,12 +82,12 @@ jobs:
           fi
 
           # Submodule Loop patches:
-          # Template for customizing submodule Loop based on Loop and Learn "Apply CustomTypeOne LoopPatches":
-          wget -qO- https://github.com/loopnlearn/Loop/commit/b3ba20892fb4f516d4d53c73a51ffbc80960ce3f.patch | git apply --directory=Loop -v --whitespace=fix
+          # Template for customizing submodule Loop based on "CustomTypeOne/LoopPatches":
+          wget -qO- https://raw.githubusercontent.com/CustomTypeOne/LoopPatches/main/LoopPatch.txt | git apply --directory=Loop -v --whitespace=fix
           
           # Submodule LoopKit patches:
-          # Template for customizing submodule LoopKit based on Loop and Learn "Apply CustomTypeOne LoopPatches":
-          wget -qO- https://github.com/loopnlearn/LoopKit/commit/21816dfe073c871c2a580c9c352d6e9072a730be.patch | git apply --directory=LoopKit -v --whitespace=fix
+          # Template for customizing submodule LoopKit based on "CustomTypeOne/LoopPatches":
+          wget -qO- https://raw.githubusercontent.com/CustomTypeOne/LoopPatches/main/LoopkitPatch.txt | git apply --directory=LoopKit -v --whitespace=fix
           
           # Add patches for customization of additional submodules by following the templates above, 
           # and make sure to specify the submodule by setting '--directory=(submodule_name)'.
