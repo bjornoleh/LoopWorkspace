@@ -18,9 +18,9 @@ env:
   CUSTOMIZE_APP: 'true' # apply code customizations from patch files in LoopWorkspace/patches/ and/or individual submodule patches specified under 'name: Customize Loop' ('false / 'true')
 
 jobs:
-   secrets:
-     uses: ./.github/workflows/validate_secrets.yml
-     secrets: inherit
+  secrets:
+    uses: ./.github/workflows/validate_secrets.yml
+    secrets: inherit
 
   upstream_sync_and_build:
     needs: [secrets]
