@@ -54,8 +54,7 @@ jobs:
     - name: Show value of 'has_new_commits'
       run: echo ${{ steps.sync.outputs.has_new_commits }}
       
-  launch_build_loop:
-    needs: check_latest_from_upstream
-    if: steps.sync.outputs.has_new_commits == 'true'
-    uses: ./.github/workflows/build_loop.yml
-    secrets: inherit
+    - name: Launch Build Loop workflow
+      if: steps.sync.outputs.has_new_commits == 'true'
+      id: launch
+      uses: ./.github/workflows/build_loop.yml
