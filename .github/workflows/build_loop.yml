@@ -88,8 +88,8 @@ jobs:
           wget -qO- https://github.com/loopnlearn/Loop/commit/1468358552babba21da44a4a5bb6ae679588bc66.patch | git apply --directory=Loop -v --whitespace=fix
           
           # Submodule LoopKit patches:
-          # Template for customizing submodule LoopKit 
-          # Copy url from a GitHub commit or pull request and insert below, and remove the "#" sign from the beginning of the line below to activate):
+          # General template for customizing submodule LoopKit 
+          # Copy url from a GitHub commit or pull request and insert below, and remove the "#" sign from the beginning of the line to activate:
           #wget -qO- url_to_github_commit.patch | git apply --directory=LoopKit -v --whitespace=fix
           
           # Submodule xxxxx patches:
