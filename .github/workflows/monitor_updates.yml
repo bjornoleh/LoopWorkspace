@@ -9,8 +9,8 @@ on:
 
 env:
   UPSTREAM_REPO: LoopKit/LoopWorkspace
-  UPSTREAM_BRANCH: dev
-  TARGET_BRANCH: check_upstream
+  UPSTREAM_BRANCH: main
+  TARGET_BRANCH: main
 
 jobs:
   check_latest_from_upstream:
@@ -25,7 +25,7 @@ jobs:
       with:
         # optional: set the branch to checkout,
         # sync action checks out your 'target_sync_branch' anyway
-        #submodules: recursive (perhaps not required to check out submodules recursively to detect changes for LoopWorkspace?)
+        #submodules: recursive (probably not required to check out submodules recursively to detect changes for LoopWorkspace?)
         ref: ${{ env.TARGET_BRANCH }}
 
     # REQUIRED step
@@ -53,11 +53,12 @@ jobs:
       
     - name: Show value of 'has_new_commits'
       run: echo ${{ steps.sync.outputs.has_new_commits }}
-        
-  launch_build_loop:
+      
+  # Launch build workflow if new commits are found
+  launch_build_workflow:
     uses: ./.github/workflows/build_loop.yml
     needs: check_latest_from_upstream
-    name: Launch Build Loop workflow
+    name: Launch build workflow
     if: ${{needs.check_latest_from_upstream.steps.sync.outputs.has_new_commits}}
     secrets: inherit
     
