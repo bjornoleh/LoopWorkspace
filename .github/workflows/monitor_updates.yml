@@ -56,7 +56,7 @@ jobs:
       
   # Launch build workflow if new commits are found
   launch_build_workflow:
-    if: needs.check_latest_from_upstream.sync.outputs.has_new_commits == 'true'
+    if: needs.check_latest_from_upstream.outputs.has_new_commits == 'true'
     needs: check_latest_from_upstream
     name: Launch build workflow
     uses: ./.github/workflows/build_loop.yml
