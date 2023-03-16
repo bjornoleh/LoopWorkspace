@@ -58,7 +58,7 @@ jobs:
   launch_build_workflow:
     uses: ./.github/workflows/build_loop.yml
     needs: check_latest_from_upstream
-    name: Launch build workflow
     if: ${{needs.check_latest_from_upstream.steps.sync.outputs.has_new_commits}}
+    name: Launch build workflow
     secrets: inherit
     
