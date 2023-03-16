@@ -2,6 +2,7 @@ name: 4. Build Loop
 run-name: Build Loop
 on:
   workflow_dispatch:
+  workflow_call:
   
   ## Remove the "#" sign from the beginning of the line below to get automated builds on push (code changes in your repository)
   #push:
