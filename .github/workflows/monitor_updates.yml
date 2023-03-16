@@ -9,8 +9,8 @@ on:
 
 env:
   UPSTREAM_REPO: LoopKit/LoopWorkspace
-  UPSTREAM_BRANCH: main
-  TARGET_BRANCH: main
+  UPSTREAM_BRANCH: dev
+  TARGET_BRANCH: check_upstream
 
 jobs:
   check_latest_from_upstream:
@@ -56,5 +56,5 @@ jobs:
       
     - name: Launch Build Loop workflow
       id: launch
-      if: steps.sync.outputs.has_new_commits == 'true'
+      #if: steps.sync.outputs.has_new_commits == 'true'
       uses: ./.github/workflows/build_loop.yml
