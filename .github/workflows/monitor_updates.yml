@@ -45,7 +45,7 @@ jobs:
     # Step 3: Display a sample message based on the sync output var 'has_new_commits'
     - name: New commits found
       if: steps.sync.outputs.has_new_commits == 'true'
-      uses: ./.github/workflows/build_loop.yml
+      run: echo "New commits were found to sync."
     
     - name: No new commits
       if: steps.sync.outputs.has_new_commits == 'false'
@@ -53,3 +53,8 @@ jobs:
       
     - name: Show value of 'has_new_commits'
       run: echo ${{ steps.sync.outputs.has_new_commits }}
+      
+  launch_build_loop:
+    if: steps.sync.outputs.has_new_commits == 'true'
+    uses: ./.github/workflows/build_loop.yml
+    secrets: inherit  
