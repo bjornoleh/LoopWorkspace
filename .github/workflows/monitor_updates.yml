@@ -57,7 +57,16 @@ jobs:
     - uses: actions/checkout@v3 # Necessary to access local action
       with:
         ref: ${{ env.TARGET_BRANCH }}
-    - name: Launch Build Loop workflow
-      id: launch
-      #if: steps.sync.outputs.has_new_commits == 'true'
-      uses: ./.github/workflows/build_loop.yml
+        
+launch_build_loop:
+  #if: steps.sync.outputs.has_new_commits == 'true'
+  - uses: actions/checkout@v3 # Necessary to access local action
+    with:
+        ref: ${{ env.TARGET_BRANCH }}
+  - name: Launch Build Loop workflow
+    needs: check_latest_from_upstream
+    uses: ./.github/workflows/build_loop.yml
+
+
+      
+      
