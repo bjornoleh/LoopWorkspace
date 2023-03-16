@@ -56,6 +56,6 @@ jobs:
         
   launch_build_loop:
     uses: ./.github/workflows/build_loop.yml
-    #if: steps.sync.outputs.has_new_commits == 'true'
+    if: steps.sync.outputs.has_new_commits == 'true'
     needs: check_latest_from_upstream
     secrets: inherit
