@@ -53,10 +53,6 @@ jobs:
       
     - name: Show value of 'has_new_commits'
       run: echo ${{ steps.sync.outputs.has_new_commits }}
-      
-    - uses: actions/checkout@v3 # Necessary to access local action
-      with:
-        ref: ${{ env.TARGET_BRANCH }}
         
   launch_build_loop:
     uses: ./.github/workflows/build_loop.yml
