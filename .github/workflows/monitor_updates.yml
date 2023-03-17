@@ -16,6 +16,8 @@ jobs:
   check_latest_from_upstream:
     runs-on: ubuntu-latest
     name: Check latest commits from upstream repo
+    outputs: 
+      NEW_COMMITS: ${{ steps.sync.outputs.has_new_commits }}
 
     steps:
     # REQUIRED step
@@ -41,7 +43,6 @@ jobs:
         target_repo_token: ${{ secrets.GH_PAT }}
         upstream_sync_branch: ${{ env.UPSTREAM_BRANCH }}
         upstream_sync_repo: ${{ env.UPSTREAM_REPO }}
-        run: echo "NEW_COMMITS=${{ steps.sync.outputs.has_new_commits }} >> $GITHUB_OUTPUT
       
     # Step 3: Display a sample message based on the sync output var 'has_new_commits'
     - name: New commits found
@@ -50,14 +51,16 @@ jobs:
     
     - name: No new commits
       if: steps.sync.outputs.has_new_commits == 'false'
-      run: echo "There were no new commits."
+      run: echo echo "There were no new commits."
       
     - name: Show value of 'has_new_commits'
-      run: echo ${{ steps.sync.outputs.has_new_commits }}
+      run: |
+        echo ${{ steps.sync.outputs.has_new_commits }}
+        echo "NEW_COMMITS=${{ steps.sync.outputs.has_new_commits }}" >> $GITHUB_OUTPUT
       
   # Launch build workflow if new commits are found
   launch_build_workflow:
-    if: needs.check_latest_from_upstream.steps.sync.outputs.NEW_COMMITS == 'false'
+    if: needs.check_latest_from_upstream.outputs.NEW_COMMITS == 'true'
     needs: check_latest_from_upstream
     name: Launch build workflow
     uses: ./.github/workflows/build_loop.yml
