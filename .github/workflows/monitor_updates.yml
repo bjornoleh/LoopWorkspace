@@ -41,6 +41,7 @@ jobs:
         target_repo_token: ${{ secrets.GH_PAT }}
         upstream_sync_branch: ${{ env.UPSTREAM_BRANCH }}
         upstream_sync_repo: ${{ env.UPSTREAM_REPO }}
+        run: echo "NEW_COMMITS=${{ steps.sync.outputs.has_new_commits }} >> $GITHUB_OUTPUT
       
     # Step 3: Display a sample message based on the sync output var 'has_new_commits'
     - name: New commits found
@@ -56,7 +57,7 @@ jobs:
       
   # Launch build workflow if new commits are found
   launch_build_workflow:
-    if: needs.check_latest_from_upstream.steps.sync.outputs.has_new_commits == 'true'
+    if: needs.check_latest_from_upstream.steps.sync.outputs.NEW_COMMITS == 'false'
     needs: check_latest_from_upstream
     name: Launch build workflow
     uses: ./.github/workflows/build_loop.yml
