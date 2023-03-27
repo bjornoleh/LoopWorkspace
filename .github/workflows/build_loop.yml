@@ -1,5 +1,5 @@
 name: 4. Build Loop
-run-name: Build Loop ${{ github.env.UPSTREAM_BRANCH }}
+run-name: Build Loop
 on:
   workflow_dispatch:
   workflow_call:
