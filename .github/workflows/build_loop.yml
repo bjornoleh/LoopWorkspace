@@ -89,6 +89,19 @@ jobs:
           # Several patches may be added per submodule.
           # Adding comments (#) may be useful to easily tell the individual patches apart.
           
+          ####### testing curl with LnL / CustomTypeOne LoopPatches ##########
+          # Line to add to build_loop.yml to add xDrip4iOS and GlucoseDirect CGM clients
+          curl https://github.com/loopnlearn/LoopWorkspace/commit/13c626c04f01c9870c15fa9463201645b4267b25.patch | git apply -v --whitespace=fix
+
+          # Line to add to build_loop.yml to replace default Loop Logo with Loop and Learn Logo
+          curl https://github.com/loopnlearn/LoopWorkspace/commit/7c1dd02e74508a171128de85741e44b09ccee118.patch | git apply -v --whitespace=fix
+
+          # Lines to add to build_loop.yml to apply CustomTypeOne LoopPatches
+          curl https://raw.githubusercontent.com/CustomTypeOne/LoopPatches/main/LoopPatch.txt | git apply --directory=Loop -v --whitespace=fix
+          curl https://raw.githubusercontent.com/CustomTypeOne/LoopPatches/main/LoopkitPatch.txt | git apply --directory=LoopKit -v --whitespace=fix
+          
+          #######################################################################
+
           
       # Patch Fastlane Match to not print tables
       - name: Patch Match Tables
