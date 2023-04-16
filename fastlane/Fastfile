@@ -190,6 +190,7 @@ platform :ios do
       app_platform: "IOS"
     )
 
+
     configure_bundle_id("Loop Intent Extension", "com.#{TEAMID}.loopkit.Loop.Loop-Intent-Extension", [
       Spaceship::ConnectAPI::BundleIdCapability::Type::APP_GROUPS
     ])
