@@ -185,10 +185,10 @@ platform :ios do
     ])
     
     # Create the App Group:
-    create_group("group.com.#{TEAMID}.loopkit.LoopGroupTest", [
-      Spaceship::ConnectAPI.create_group(app_platform: "IOS")
-
-    ])
+    group = Spaceship::ConnectAPI::AppGroup.create!(
+      app_group_name: "group.com.#{TEAMID}.loopkit.LoopGroupTest",
+      app_platform: "IOS"
+    )
 
     configure_bundle_id("Loop Intent Extension", "com.#{TEAMID}.loopkit.Loop.Loop-Intent-Extension", [
       Spaceship::ConnectAPI::BundleIdCapability::Type::APP_GROUPS
