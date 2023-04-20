@@ -190,7 +190,6 @@ platform :ios do
       associate_group: "group.com.#{TEAMID}.loopkit.LoopGroupTest",
     )
 
-   
   end
 
   desc "Provision Certificates"

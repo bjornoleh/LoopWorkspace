@@ -30,6 +30,7 @@ jobs:
           fastlane fastlane-credentials add --username ${{ secrets.APPLE_ID }} --password ${{ secrets.APPLE_PASSWORD }}
           fastlane identifiers
         env:
+          APPLE_ID: ${{ secrets.APPLE_ID }}
           TEAMID: ${{ secrets.TEAMID }}
           GH_PAT: ${{ secrets.GH_PAT }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
