@@ -171,60 +171,66 @@ platform :ios do
     )
 
     produce(
-      app_identifier: "com.#{TEAMID}.loopkit.Loop",
-      app_name: "Loop",
-      app_version: "1.0.0",
-      sku: "LOOP",
+      app_identifier: "com.#{TEAMID}.loopkit.LoopTest",
+      app_name: "Loop_#{TEAMID}",
+      #app_version: "1.0.0",
+      #sku: "LOOP_#{TEAMID}",
       language: "English",
       company_name: "Your Company Name",
       # If you need to specify entitlements or services, use the following options:
-      # entitlements: { "com.apple.developer.healthkit" => ["$your_group_identifier"] },
-      # services: ['app_group']
+      entitlements: {
+        "com.apple.developer.healthkit" => ["group.com.#{TEAMID}.loopkit.LoopGroupTest"],
+        "com.apple.security.application-groups" => ["group.com.#{TEAMID}.loopkit.LoopGroupTest"],
+        "com.apple.developer.siri" => ["group.com.#{TEAMID}.loopkit.LoopGroupTest"],
+        "com.apple.developer.aps-environment" => "development",
+        "com.apple.developer.usernotifications.time-sensitive" => true
+      },
+      services: ['app_group']
     )
 
     produce(
-      app_identifier: "com.#{TEAMID}.loopkit.Loop.Loop-Intent-Extension",
+      app_identifier: "com.#{TEAMID}.loopkit.LoopTest.Loop-Intent-Extension",
       app_name: "Loop Intent Extension",
-      app_version: "1.0.0",
-      sku: "LOOP-INTENT-EXTENSION",
+      #app_version: "1.0.0",
+      #sku: "LOOP-INTENT-EXTENSION",
       language: "English",
-      company_name: "Your Company Name"
+      #company_name: "Your Company Name"
     )
 
     produce(
-      app_identifier: "com.#{TEAMID}.loopkit.Loop.statuswidget",
+      app_identifier: "com.#{TEAMID}.loopkit.LoopTest.statuswidget",
       app_name: "Loop Status Extension",
-      app_version: "1.0.0",
-      sku: "LOOP-STATUS-EXTENSION",
+      #app_version: "1.0.0",
+      #sku: "LOOP-STATUS-EXTENSION",
       language: "English",
-      company_name: "Your Company Name"
+      #company_name: "Your Company Name"
     )
 
     produce(
-      app_identifier: "com.#{TEAMID}.loopkit.Loop.LoopWatch",
+      app_identifier: "com.#{TEAMID}.loopkit.LoopTest.LoopWatch",
       app_name: "WatchApp",
-      app_version: "1.0.0",
-      sku: "LOOP-WATCH",
+      #app_version: "1.0.0",
+      #sku: "LOOP-WATCH",
       language: "English",
-      company_name: "Your Company Name"
+      #company_name: "Your Company Name"
     )
 
     produce(
-      app_identifier: "com.#{TEAMID}.loopkit.Loop.LoopWatch.watchkitextension",
+      app_identifier: "com.#{TEAMID}.loopkit.LoopTest.LoopWatch.watchkitextension",
       app_name: "WatchApp Extension",
-      app_version: "1.0.0",
-      sku: "LOOP-WATCH-EXTENSION",
+      #app_version: "1.0.0",
+      #sku: "LOOP-WATCH-EXTENSION",
       language: "English",
-      company_name: "Your Company Name"
+      #company_name: "Your Company Name"
     )
 
     produce(
-      app_identifier: "com.#{TEAMID}.loopkit.Loop.SmallStatusWidget",
+      app_identifier: "com.#{TEAMID}.loopkit.LoopTest.SmallStatusWidget",
       app_name: "Small Status Widget",
-      app_version: "1.0.0",
-      sku: "SMALL-STATUS-WIDGET",
+      #app_version: "1.0.0",
+      #sku: "SMALL-STATUS-WIDGET",
       language: "English",
-      company_name: "Your Company Name"
+      #company_name: "Your Company Name"
     )
   end
 
