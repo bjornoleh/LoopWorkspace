@@ -28,6 +28,7 @@ jobs:
       - name: Fastlane Provision
         run: fastlane identifiers
         env:
+          APPLE_ID: ${{ secrets.APPLE_ID }}
           TEAMID: ${{ secrets.TEAMID }}
           GH_PAT: ${{ secrets.GH_PAT }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
