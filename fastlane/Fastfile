@@ -184,6 +184,7 @@ platform :ios do
         push_notification: "on",
         siri_kit: "on",
         time_sensitive_notifications: "on",
+      }
     )
 
     produce(
