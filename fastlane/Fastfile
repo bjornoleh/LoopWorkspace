@@ -170,39 +170,62 @@ platform :ios do
       key_content: "#{FASTLANE_KEY}"
     )
 
-    def configure_bundle_id(name, identifier, capabilities)
-      bundle_id = Spaceship::ConnectAPI::BundleId.find(identifier) || Spaceship::ConnectAPI::BundleId.create(name: name, identifier: identifier)
-      capabilities.each { |capability|
-        bundle_id.create_capability(capability)
-      }
-    end
+    produce(
+      app_identifier: "com.#{TEAMID}.loopkit.Loop",
+      app_name: "Loop",
+      app_version: "1.0.0",
+      sku: "LOOP",
+      language: "English",
+      company_name: "Your Company Name",
+      # If you need to specify entitlements or services, use the following options:
+      # entitlements: { "com.apple.developer.healthkit" => ["$your_group_identifier"] },
+      # services: ['app_group']
+    )
 
-    configure_bundle_id("Loop", "com.#{TEAMID}.loopkit.Loop", [
-      Spaceship::ConnectAPI::BundleIdCapability::Type::APP_GROUPS,
-      Spaceship::ConnectAPI::BundleIdCapability::Type::HEALTHKIT,
-      Spaceship::ConnectAPI::BundleIdCapability::Type::PUSH_NOTIFICATIONS,
-      Spaceship::ConnectAPI::BundleIdCapability::Type::SIRIKIT
-    ])
+    produce(
+      app_identifier: "com.#{TEAMID}.loopkit.Loop.Loop-Intent-Extension",
+      app_name: "Loop Intent Extension",
+      app_version: "1.0.0",
+      sku: "LOOP-INTENT-EXTENSION",
+      language: "English",
+      company_name: "Your Company Name"
+    )
 
-    configure_bundle_id("Loop Intent Extension", "com.#{TEAMID}.loopkit.Loop.Loop-Intent-Extension", [
-      Spaceship::ConnectAPI::BundleIdCapability::Type::APP_GROUPS
-    ])
+    produce(
+      app_identifier: "com.#{TEAMID}.loopkit.Loop.statuswidget",
+      app_name: "Loop Status Extension",
+      app_version: "1.0.0",
+      sku: "LOOP-STATUS-EXTENSION",
+      language: "English",
+      company_name: "Your Company Name"
+    )
 
-    configure_bundle_id("Loop Status Extension", "com.#{TEAMID}.loopkit.Loop.statuswidget", [
-      Spaceship::ConnectAPI::BundleIdCapability::Type::APP_GROUPS
-    ])
+    produce(
+      app_identifier: "com.#{TEAMID}.loopkit.Loop.LoopWatch",
+      app_name: "WatchApp",
+      app_version: "1.0.0",
+      sku: "LOOP-WATCH",
+      language: "English",
+      company_name: "Your Company Name"
+    )
 
-    configure_bundle_id("WatchApp", "com.#{TEAMID}.loopkit.Loop.LoopWatch", [])
+    produce(
+      app_identifier: "com.#{TEAMID}.loopkit.Loop.LoopWatch.watchkitextension",
+      app_name: "WatchApp Extension",
+      app_version: "1.0.0",
+      sku: "LOOP-WATCH-EXTENSION",
+      language: "English",
+      company_name: "Your Company Name"
+    )
 
-    configure_bundle_id("WatchApp Extension", "com.#{TEAMID}.loopkit.Loop.LoopWatch.watchkitextension", [
-      Spaceship::ConnectAPI::BundleIdCapability::Type::HEALTHKIT,
-      Spaceship::ConnectAPI::BundleIdCapability::Type::SIRIKIT
-    ])
-
-    configure_bundle_id("Small Status Widget", "com.#{TEAMID}.loopkit.Loop.SmallStatusWidget", [
-      Spaceship::ConnectAPI::BundleIdCapability::Type::APP_GROUPS
-    ])
-    
+    produce(
+      app_identifier: "com.#{TEAMID}.loopkit.Loop.SmallStatusWidget",
+      app_name: "Small Status Widget",
+      app_version: "1.0.0",
+      sku: "SMALL-STATUS-WIDGET",
+      language: "English",
+      company_name: "Your Company Name"
+    )
   end
 
   desc "Provision Certificates"
