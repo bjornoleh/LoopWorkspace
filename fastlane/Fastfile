@@ -186,7 +186,7 @@ platform :ios do
         push_notification: "on",
         siri_kit: "on",
         time_sensitive_notifications: "on",
-      }
+      },
       associate_group: "group.com.#{TEAMID}.loopkit.LoopGroupTest",
     )
 
