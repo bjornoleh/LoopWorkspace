@@ -187,7 +187,7 @@ platform :ios do
         siri_kit: "on",
         time_sensitive_notifications: "on",
       },
-      associate_domain: ["group.com.#{TEAMID}.loopkit.LoopGroupTest"],
+      #associate_domain: ["group.com.#{TEAMID}.loopkit.LoopGroupTest"],
     )
 
   end
