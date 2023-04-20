@@ -178,14 +178,12 @@ platform :ios do
       language: "English",
       company_name: "Your Company Name",
       # If you need to specify entitlements or services, use the following options:
-      entitlements: {
-        "com.apple.developer.healthkit" => ["group.com.#{TEAMID}.loopkit.LoopGroupTest"],
-        "com.apple.security.application-groups" => ["group.com.#{TEAMID}.loopkit.LoopGroupTest"],
-        "com.apple.developer.siri" => ["group.com.#{TEAMID}.loopkit.LoopGroupTest"],
-        "com.apple.developer.aps-environment" => "development",
-        "com.apple.developer.usernotifications.time-sensitive" => true
-      },
-      services: ['app_group']
+      enable_services: {
+        app_group: "on",
+        health_kit: "on",
+        push_notification: "on",
+        siri_kit: "on",
+        time_sensitive_notifications: "on",
     )
 
     produce(
