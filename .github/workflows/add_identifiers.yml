@@ -26,9 +26,12 @@ jobs:
         
       # Create or update identifiers for app
       - name: Fastlane Provision
-        run: fastlane identifiers
+        run: |
+        fastlane fastlane-credentials add --username ${{ secrets.APPLE_ID }} --password ${{ secrets.APPLE_PASSWORD }}
+        fastlane identifiers
         env:
           APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
           TEAMID: ${{ secrets.TEAMID }}
           GH_PAT: ${{ secrets.GH_PAT }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
