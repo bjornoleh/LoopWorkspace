@@ -29,7 +29,7 @@ jobs:
         run: |
           fastlane spaceauth -u ${{ secrets.APPLE_ID }}
           echo "export FASTLANE_SESSION='$(cat ~/.fastlane/spaceship/${{ secrets.APPLE_ID }}/cookie)' >> $GITHUB_ENV"
-          echo "::add-mask::${{env.FASTLANE_SESSION}}"
+          # echo "::add-mask::${{env.FASTLANE_SESSION}}"
           echo "FASTLANE_SESSION=${{env.FASTLANE_SESSION}}" >> $GITHUB_ENV
         env:
           # secrets are masked by default
