@@ -1,0 +1,36 @@
+name: 1. 2FA
+run-name: 2FA
+on:
+  workflow_dispatch:
+
+jobs:
+  _2fa:
+    #needs: secrets
+    runs-on: macos-12
+    steps:
+      # Uncomment to manually select latest Xcode if needed
+      #- name: Select Latest Xcode
+      #  run: "sudo xcode-select --switch /Applications/Xcode_13.0.app/Contents/Developer"
+      
+      # Checks-out the repo
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      # Authenticate using 2FA (for masking, see https://stackoverflow.com/questions/70558558/how-to-mask-environment-variables-created-in-github-when-running-a-workflow)
+      - name: Authenticate with App Store Connect
+        run: |
+          fastlane spaceauth -u ${{ secrets.APPLE_ID }}
+          echo "export FASTLANE_SESSION='$(cat ~/.fastlane/spaceship/${{ secrets.APPLE_ID }}/cookie)' >> $GITHUB_ENV"
+          # echo "::add-mask::${{env.FASTLANE_SESSION}}"
+          echo "FASTLANE_SESSION=${{env.FASTLANE_SESSION}}" >> $GITHUB_ENV
+        env:
+          # secrets are masked by default
+          FASTLANE_SESSION: ${{secrets.FASTLANE_SESSION}}
+
+      ## Write new access token to secret access token
+      - uses: hmanzur/actions-set-secret@v2.0.0
+        with:
+          name: 'FASTLANE_SESSION'
+          value: ${{env.FASTLANE_SESSION}}
+          repository: ${{ github.repository }}
+          token: ${{ secrets.GH_PAT }}
