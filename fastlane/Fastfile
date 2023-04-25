@@ -196,7 +196,8 @@ platform :ios do
     )
 
     #sh("fastlane produce group -g group.com.244D5GDCJ8.loopkit.LoopGroupTest -n 'Test group'")
-    sh("fastlane produce associate_group -a com.#{TEAMID}.loopkit.LoopTest group.com.#{TEAMID}.loopkit.LoopGroupTest") # https://github.com/fastlane/fastlane/issues/15151
+    sh("fastlane produce associate_group -a com.244D5GDCJ8.loopkit.LoopTest group.com.244D5GDCJ8.loopkit.LoopGroupTest") 
+    # https://github.com/fastlane/fastlane/issues/15151
 
   end
 
