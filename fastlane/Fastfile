@@ -190,12 +190,13 @@ platform :ios do
         siri_kit: "on",
         #time_sensitive_notifications: "on",
         game_center: "off",
+        associated_domains: "on"
       },
       #associate_group: ["group.com.#{TEAMID}.loopkit.LoopGroupTest"],
     )
 
-    sh("set -x && fastlane produce group -g group.com.244D5GDCJ8.loopkit.LoopGroupTest2 -n 'Test group2'")
-    #sh("set -x && fastlane produce associate_group -a com.#{TEAMID}.loopkit.LoopTest group.com.#{TEAMID}.loopkit.LoopGroupTest") # https://github.com/fastlane/fastlane/issues/15151
+    #sh("fastlane produce group -g group.com.244D5GDCJ8.loopkit.LoopGroupTest -n 'Test group'")
+    sh("fastlane produce associate_group -a com.#{TEAMID}.loopkit.LoopTest group.com.#{TEAMID}.loopkit.LoopGroupTest") # https://github.com/fastlane/fastlane/issues/15151
 
   end
 
