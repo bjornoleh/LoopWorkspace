@@ -180,7 +180,7 @@ platform :ios do
       app_name: "Loop_#{TEAMID}",
       #app_version: "1.0.0",
       #sku: "LOOP_#{TEAMID}",
-      language: "English",
+      language: "en-US",
       #company_name: "Your Company Name",
       # If you need to specify entitlements or services, use the following options:
       enable_services: {
