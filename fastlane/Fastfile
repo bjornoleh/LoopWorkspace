@@ -194,6 +194,8 @@ platform :ios do
       #associate_group: ["group.com.#{TEAMID}.loopkit.LoopGroupTest"],
     )
 
+    sh("fastlane produce associate_group -a com.#{TEAMID}.loopkit.LoopTest group.com.#{TEAMID}.loopkit.LoopGroupTest") # https://github.com/fastlane/fastlane/issues/15151
+
   end
 
   desc "Provision Certificates"
