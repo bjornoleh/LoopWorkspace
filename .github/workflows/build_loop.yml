@@ -29,7 +29,6 @@ jobs:
       uses: actions/checkout@v3
       with:
         token: ${{ secrets.GH_PAT }}
-        submodules: recursive
         ref: alive
 
     - name: Sync upstream changes
