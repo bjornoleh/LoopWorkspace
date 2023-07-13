@@ -32,7 +32,7 @@ jobs:
         ref: alive
 
     - name: Sync upstream changes
-      if: ${{ env.SYNC_UPSTREAM != 'false' }} && github.repository_owner != 'LoopKit' # do not run the upstream sync action on the upstream repository
+      if: ${{ env.SYNC_UPSTREAM != 'false' && github.repository_owner != 'LoopKit' }} # do not run the upstream sync action on the upstream repository
       id: sync
       uses: aormsby/Fork-Sync-With-Upstream-action@v3.4
       with:
@@ -79,7 +79,7 @@ jobs:
           ref: ${{ env.TARGET_BRANCH }} 
 
       - name: Sync upstream changes
-        if: ${{ env.SYNC_UPSTREAM != 'false' }} && github.repository_owner != 'LoopKit' # do not run the upstream sync action on the upstream repository
+        if: ${{ env.SYNC_UPSTREAM != 'false' && github.repository_owner != 'LoopKit' }} # do not run the upstream sync action on the upstream repository
         id: sync
         uses: aormsby/Fork-Sync-With-Upstream-action@v3.4
         with:
