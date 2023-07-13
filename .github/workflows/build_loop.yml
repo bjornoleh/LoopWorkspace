@@ -88,6 +88,7 @@ jobs:
           target_repo_token: ${{ secrets.GH_PAT }}
           upstream_sync_branch: ${{ env.UPSTREAM_BRANCH }}
           upstream_sync_repo: ${{ env.UPSTREAM_REPO }}
+          target_branch_checkout_args: --recurse-submodules
       
       # Display a sample message based on the sync output var 'has_new_commits'
       - name: New commits found
