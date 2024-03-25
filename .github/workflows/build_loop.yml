@@ -70,7 +70,7 @@ jobs:
       run: |
         response=$(curl --request GET \
                           --url "https://api.github.com/repos/${{ env.UPSTREAM_REPO }}/git/refs/heads/dev" \
-                          --header "Authorization: Bearer $GH_TOKEN" \
+                          --header "Authorization: Bearer $GITHUB_TOKEN" \
                           --silent)
         echo "API Response: $response"
         SHA=$(echo "$response" | jq -r '.object.sha')
