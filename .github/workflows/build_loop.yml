@@ -68,10 +68,16 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GH_PAT }}
       run: |
-        SHA=$(curl --request GET \
-          --url "https://api.github.com/repos/${{ env.UPSTREAM_REPO }}/git/refs/heads/dev" \
-          --header "Authorization: Bearer $GH_TOKEN" \
-          --silent | jq -r '.object.sha')
+        response=$(curl --request GET \
+                          --url "https://api.github.com/repos/${{ env.UPSTREAM_REPO }}/git/refs/heads/dev" \
+                          --header "Authorization: Bearer $GH_TOKEN" \
+                          --silent)
+        echo "API Response: $response"
+        SHA=$(echo "$response" | jq -r '.object.sha')
+        if [ "$SHA" = "null" ]; then
+            echo "Error: Unable to retrieve SHA for the dev branch."
+            exit 1
+        fi
         echo "SHA of dev branch: $SHA";
         
         # Create alive branch based on LoopKit/LoopWorkspace:dev
