@@ -344,17 +344,17 @@ platform :ios do
   
       if expiration_date < Time.now + 30 * 24 * 60 * 60 # Less than 30 days to expiry
         puts "Certificate #{cert.id} is expiring soon or already expired. Revoking..."
-        #cert.revoke!
+        cert.revoke!
         revoked = true
       end
     end
   
     if revoked
       puts "Certificates were revoked. Triggering workflow to recreate them."
-      Actions.sh("echo 'cert_revoked=true' >> $GITHUB_ENV") # Set GitHub Actions environment variable
+      File.write('cert_revoked.txt', 'true')
     else
       puts "All certificates are valid. No action required."
-      Actions.sh("echo 'cert_revoked=false' >> $GITHUB_ENV") # Set GitHub Actions environment variable
+      File.write('cert_revoked.txt', 'false')
     end
   end
 end

@@ -7,6 +7,9 @@ on:
 jobs:
   check_certs:
     runs-on: ubuntu-latest
+    outputs:
+      cert_revoked: ${{ steps.set_output.outputs.cert_revoked }} # Job-level output
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -24,8 +27,14 @@ jobs:
           FASTLANE_USER: ${{ secrets.APPLE_ID }}
           FASTLANE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
         run: fastlane check_and_revoke_certificates
+        id: check_certs
+
+      - name: Set output based on Fastlane result
+        id: set_output
+        run: echo "::set-output name=cert_revoked::$(cat cert_revoked.txt)" # Output from Fastlane saved to a file
 
   trigger_create_certs:
     needs: check_certs
-    if: env.cert_revoked == 'true'
+    if: ${{ needs.check_certs.outputs.cert_revoked == 'true' }}
     uses: ./.github/workflows/create_certs.yml
+    
