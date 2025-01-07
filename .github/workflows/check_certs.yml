@@ -7,6 +7,10 @@ on:
 jobs:
   check_certs:
     runs-on: ubuntu-latest
+    env:
+      FASTLANE_ISSUER_ID: ${{ secrets.FASTLANE_ISSUER_ID }}
+      FASTLANE_KEY_ID: ${{ secrets.FASTLANE_KEY_ID }}
+      FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
     outputs:
       cert_revoked: ${{ steps.set_output.outputs.cert_revoked }} # Job-level output
 
