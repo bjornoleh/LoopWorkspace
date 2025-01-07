@@ -1,0 +1,31 @@
+name: Check Certificates
+run-name: Check Certificates (${{ github.ref_name }})
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check_certs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'
+
+      - name: Install dependencies
+        run: bundle install
+
+      - name: Check and Revoke Certificates
+        env:
+          FASTLANE_USER: ${{ secrets.APPLE_ID }}
+          FASTLANE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+        run: fastlane check_and_revoke_certificates
+
+  trigger_create_certs:
+    needs: check_certs
+    if: env.cert_revoked == 'true'
+    uses: ./.github/workflows/create_certs.yml
