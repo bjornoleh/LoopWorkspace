@@ -26,7 +26,7 @@ jobs:
         env:
           FASTLANE_USER: ${{ secrets.APPLE_ID }}
           FASTLANE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-        run: fastlane check_and_revoke_certificates
+        run: bundle exec fastlane check_and_revoke_certificates
         id: check_certs
 
       - name: Set output based on Fastlane result
@@ -37,4 +37,3 @@ jobs:
     needs: check_certs
     if: ${{ needs.check_certs.outputs.cert_revoked == 'true' }}
     uses: ./.github/workflows/create_certs.yml
-    
