@@ -339,7 +339,7 @@ platform :ios do
     revoked = false
 
     # Fetch all certificates using the authenticated session
-    certificates = Spaceship::ConnectAPI::Certificate.all(api_key: api_key)
+    certificates = Spaceship::ConnectAPI::Certificate.all # No need to pass api_key explicitly
 
     # Filter for Production/Distribution certificates
     distribution_certs = certificates.select { |cert| cert.certificate_type == "DISTRIBUTION" }
