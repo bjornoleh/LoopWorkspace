@@ -346,7 +346,9 @@ platform :ios do
 
     # Check for expiration
     distribution_certs.each do |cert|
-      expiration_date = cert.expiration_date
+      expiration_date_str = cert.expiration_date
+      expiration_date = Time.parse(expiration_date_str) # Convert the string to Time
+
       puts "Checking Distribution Certificate: #{cert.id}, Expiration: #{expiration_date}"
 
       if expiration_date < Time.now + 30 * 24 * 60 * 60 # Less than 30 days to expiry
