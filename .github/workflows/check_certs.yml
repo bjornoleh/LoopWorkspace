@@ -29,7 +29,7 @@ jobs:
       - name: Install dependencies
         run: bundle install
 
-      - name: Check Certificates
+      - name: Check Certificates and create or renew if needed
         env:
           FASTLANE_USER: ${{ secrets.APPLE_ID }}
           FASTLANE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
@@ -80,7 +80,7 @@ jobs:
           FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
           FASTLANE_SKIP_ALL_LANE_SUMMARIES: "true"
 
-  # Trigger create_certs.yml if nuke_certs ran or if certificate expired
+  # Trigger create_certs.yml if nuke_certs ran or if certificate was missing
   trigger_create_certs:
     needs: [check_certs, nuke_certs]
     if: ${{ needs.check_certs.outputs.certificate_creation_or_renewal_needed == 'true' || needs.nuke_certs.conclusion == 'success' }}
