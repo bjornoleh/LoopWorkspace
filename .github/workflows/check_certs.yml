@@ -84,3 +84,4 @@ jobs:
     needs: [check_certs, nuke_certs]
     if: ${{ needs.check_certs.outputs.cert_expired == 'true' || needs.nuke_certs.conclusion == 'success' }}
     uses: ./.github/workflows/create_certs.yml
+    secrets: inherit
