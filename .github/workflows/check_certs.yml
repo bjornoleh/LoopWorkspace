@@ -43,16 +43,19 @@ jobs:
           if [ -f "$CERT_STATUS_FILE" ]; then
             echo "Certificate creation or renewal needed:"
             cat "$CERT_STATUS_FILE"
-            echo "certificate_creation_or_renewal_needed=$CERT_STATUS_FILE" >> $GITHUB_OUTPUT
+            echo "certificate_creation_or_renewal_needed=true" >> $GITHUB_OUTPUT
           else
             echo "certificate_creation_or_renewal_needed=false" >> $GITHUB_OUTPUT
           fi
 
-  # Nuke Certs if no valid certificate or certificate was nuked
+      - name: Debug Check Certs Output
+        run: |
+          echo "certificate_creation_or_renewal_needed=${{ steps.set_output.outputs.certificate_creation_or_renewal_needed }}"
+
   nuke_certs:
     needs: check_certs
     runs-on: macos-14  # This needs to run on macOS for Fastlane
-    if: ${{ needs.check_certs.outputs.certificate_creation_or_renewal_needed == 'true' }}  # Only run if certificate is expired or invalid
+    if: ${{ needs.check_certs.outputs.certificate_creation_or_renewal_needed == 'true' }}
     steps:
       - name: Debug check_certs output
         run: echo "certificate_creation_or_renewal_needed=${{ needs.check_certs.outputs.certificate_creation_or_renewal_needed }}"
@@ -80,9 +83,9 @@ jobs:
           FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
           FASTLANE_SKIP_ALL_LANE_SUMMARIES: "true"
 
-  # Trigger create_certs.yml if nuke_certs ran or if certificate was missing
   trigger_create_certs:
     needs: [check_certs, nuke_certs]
-    if: ${{ needs.check_certs.outputs.certificate_creation_or_renewal_needed == true || needs.nuke_certs.conclusion == 'success' }}
+    if: ${{ needs.check_certs.outputs.certificate_creation_or_renewal_needed == 'true' || needs.nuke_certs.conclusion == 'success' }}
     uses: ./.github/workflows/create_certs.yml
     secrets: inherit
+
