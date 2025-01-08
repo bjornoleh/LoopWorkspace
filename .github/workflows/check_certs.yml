@@ -42,9 +42,9 @@ jobs:
           CERT_EXPIRED_FILE="/home/runner/work/LoopWorkspace/LoopWorkspace/fastlane/cert_expired.txt"
           if [ -f "$CERT_EXPIRED_FILE" ]; then
             cert_expired=$(cat $CERT_EXPIRED_FILE)
-            echo "::set-output name=cert_expired::$cert_expired"
+            echo "cert_expired=$cert_expired" >> $GITHUB_OUTPUT
           else
-            echo "::set-output name=cert_expired::false"
+            echo "cert_expired=false" >> $GITHUB_OUTPUT
           fi
 
   # Nuke Certs if no valid certificate or certificate was nuked
