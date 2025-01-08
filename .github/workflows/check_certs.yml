@@ -68,7 +68,7 @@ jobs:
         run: bundle install
 
       - name: Run Fastlane nuke_certs
-        run: fastlane nuke_certs
+        run: bundle exec fastlane nuke_certs
         env:
           TEAMID: ${{ secrets.TEAMID }}
           GH_PAT: ${{ secrets.GH_PAT }}
