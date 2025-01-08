@@ -82,7 +82,7 @@ jobs:
 
   # Trigger create_certs.yml if nuke_certs ran or if certificate was missing
   trigger_create_certs:
-    needs: [check_certs, nuke_certs]
+    needs: [check_certs]
     if: ${{ needs.check_certs.outputs.certificate_creation_or_renewal_needed == 'true' || needs.nuke_certs.conclusion == 'success' }}
     uses: ./.github/workflows/create_certs.yml
     secrets: inherit
