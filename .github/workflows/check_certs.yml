@@ -36,14 +36,13 @@ jobs:
       - name: Set output based on Fastlane result
         id: set_output
         run: |
-          if [ -f cert_expired.txt ]; then
+          CERT_EXPIRED_FILE="/home/runner/work/LoopWorkspace/LoopWorkspace/fastlane/cert_expired.txt"
+          if [ -f "$CERT_EXPIRED_FILE" ]; then
             # Display the content of cert_expired.txt in the logs
             echo "Content of cert_expired.txt:"
-            cat cert_expired.txt
-            echo "cert_expired=$(cat cert_expired.txt)" >> $GITHUB_ENV
+            cat "$CERT_EXPIRED_FILE"
+            echo "cert_expired=$(cat $CERT_EXPIRED_FILE)" >> $GITHUB_ENV
           else
-            echo "Content of cert_expired.txt:"
-            cat cert_expired.txt
             echo "cert_expired=false" >> $GITHUB_ENV
           fi
 
