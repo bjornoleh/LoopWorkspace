@@ -41,12 +41,10 @@ jobs:
         run: |
           CERT_EXPIRED_FILE="/home/runner/work/LoopWorkspace/LoopWorkspace/fastlane/cert_expired.txt"
           if [ -f "$CERT_EXPIRED_FILE" ]; then
-            # Display the content of cert_expired.txt in the logs
-            echo "Content of cert_expired.txt:"
-            cat "$CERT_EXPIRED_FILE"
-            echo "cert_expired=$(cat $CERT_EXPIRED_FILE)" >> $GITHUB_ENV
+            cert_expired=$(cat $CERT_EXPIRED_FILE)
+            echo "::set-output name=cert_expired::$cert_expired"
           else
-            echo "cert_expired=false" >> $GITHUB_ENV
+            echo "::set-output name=cert_expired::false"
           fi
 
   # Nuke Certs if no valid certificate or certificate was nuked
@@ -55,6 +53,9 @@ jobs:
     runs-on: macos-14  # This needs to run on macOS for Fastlane
     if: ${{ needs.check_certs.outputs.cert_expired == 'true' }}  # Only run if certificate is expired or invalid
     steps:
+      - name: Debug check_certs output
+        run: echo "cert_expired=${{ needs.check_certs.outputs.cert_expired }}"
+
       - name: Checkout repository
         uses: actions/checkout@v3
 
