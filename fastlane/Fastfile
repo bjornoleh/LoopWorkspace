@@ -279,7 +279,7 @@ platform :ios do
   end
 
   desc "Check Certificates and Trigger Workflow for Expired Certificates"
-  lane :check_and_notify_certificates do
+  lane :check_and_renew_certificates do
     setup_ci if ENV['CI']
     ENV["MATCH_READONLY"] = false.to_s
   
@@ -302,9 +302,9 @@ platform :ios do
     # Handle case where no distribution certificates are found
     if distribution_certs.empty?
       puts "⚠️ No distribution certificates found! Triggering workflow to create new certificates."
-      expired_certificate_found = true
+      certificate_creation_or_renewal_needed = true
     else
-      # Get expiration warning days from ENV or default to 30
+      # Get expiration warning days from ENV or default to 7
       expiration_warning_days = (ENV['EXPIRATION_WARNING_DAYS'] || 30).to_i
   
       # Check for expiration
@@ -315,38 +315,32 @@ platform :ios do
   
         if expiration_date < Time.now
           puts "❌ Certificate #{cert.id} is already expired!"
-          expired_certificate_found = true
+          certificate_creation_or_renewal_needed = true
         elsif expiration_date < Time.now + expiration_warning_days * 24 * 60 * 60
           puts "⚠️ Certificate #{cert.id} is expiring within #{expiration_warning_days} days! ☠️ Nuking the certificate! ☠️"
-          expired_certificate_found = true
+          certificate_creation_or_renewal_needed = true
         else
           puts "✅ Certificate #{cert.id} is valid, and will not expire during the next #{expiration_warning_days} days"
         end
       end
     end
   
-    # Write result to cert_expired.txt
-    file_path = File.expand_path('cert_expired.txt')
-    File.write(file_path, expired_certificate_found ? 'true' : 'false')
-  
-    # Log the absolute path of the file
-    puts "Absolute path of cert_expired.txt: #{file_path}"
-  
-    # Log the initial content of cert_expired.txt for debugging
-    cert_expired_content = File.read(file_path)
-    puts "Initial contents of cert_expired.txt: #{cert_expired_content}"
+    # Write result to certificate_creation_or_renewal_needed.txt
+    file_path = File.expand_path('certificate_creation_or_renewal_needed.txt')
+    File.write(file_path, certificate_creation_or_renewal_needed ? 'true' : 'false')
   
     # Handle output for triggering workflow
-    if expired_certificate_found
+    if certificate_creation_or_renewal_needed
       puts "❌ At least one certificate is expired or no certificates found. Creating flag file to trigger workflow."
-      File.write('cert_expired.txt', 'true')
+      File.write('certificate_creation_or_renewal_needed.txt', 'true')
     else
       puts "✅ No certificates are expired or missing. No action required."
-      File.write('cert_expired.txt', 'false')
+      File.write('certificate_creation_or_renewal_needed.txt', 'false')
     end
   
-    # Ensure the content is logged again after final write
-    final_content = File.read('cert_expired.txt')
-    puts "Final contents of cert_expired.txt: #{final_content}"
+    # Log the absolute path and contents of the certificate_creation_or_renewal_needed.txt file
+    puts "Absolute path of certificate_creation_or_renewal_needed.txt: #{file_path}"
+    certificate_creation_or_renewal_needed_content = File.read(file_path)
+    puts "Certificate creation or renewal_needed: #{certificate_creation_or_renewal_needed_content}"
   end
 end

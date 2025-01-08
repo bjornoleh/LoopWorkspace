@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 env:
-  EXPIRATION_WARNING_DAYS: 365
+  EXPIRATION_WARNING_DAYS: 7
 
 jobs:
   check_certs:
@@ -15,7 +15,7 @@ jobs:
       FASTLANE_KEY_ID: ${{ secrets.FASTLANE_KEY_ID }}
       FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
     outputs:
-      cert_expired: ${{ steps.set_output.outputs.cert_expired }} # Job-level output for expired certificates
+      certificate_creation_or_renewal_needed: ${{ steps.set_output.outputs.certificate_creation_or_renewal_needed }}
 
     steps:
       - name: Checkout repository
@@ -33,28 +33,29 @@ jobs:
         env:
           FASTLANE_USER: ${{ secrets.APPLE_ID }}
           FASTLANE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-        run: bundle exec fastlane check_and_notify_certificates
+        run: bundle exec fastlane check_and_renew_certificates
         id: check_certs
 
       - name: Set output based on Fastlane result
         id: set_output
         run: |
-          CERT_EXPIRED_FILE="/home/runner/work/LoopWorkspace/LoopWorkspace/fastlane/cert_expired.txt"
-          if [ -f "$CERT_EXPIRED_FILE" ]; then
-            cert_expired=$(cat $CERT_EXPIRED_FILE)
-            echo "cert_expired=$cert_expired" >> $GITHUB_OUTPUT
+          CERT_STATUS_FILE="/home/runner/work/LoopWorkspace/LoopWorkspace/fastlane/certificate_creation_or_renewal_needed.txt"
+          if [ -f "$CERT_STATUS_FILE" ]; then
+            echo "Certificate creation or renewal needed:"
+            cat "$CERT_STATUS_FILE"
+            echo "certificate_creation_or_renewal_needed=$CERT_STATUS_FILE" >> $GITHUB_OUTPUT
           else
-            echo "cert_expired=false" >> $GITHUB_OUTPUT
+            echo "certificate_creation_or_renewal_needed=false" >> $GITHUB_OUTPUT
           fi
 
   # Nuke Certs if no valid certificate or certificate was nuked
   nuke_certs:
     needs: check_certs
     runs-on: macos-14  # This needs to run on macOS for Fastlane
-    if: ${{ needs.check_certs.outputs.cert_expired == 'true' }}  # Only run if certificate is expired or invalid
+    if: ${{ needs.check_certs.outputs.certificate_creation_or_renewal_needed == 'true' }}  # Only run if certificate is expired or invalid
     steps:
       - name: Debug check_certs output
-        run: echo "cert_expired=${{ needs.check_certs.outputs.cert_expired }}"
+        run: echo "certificate_creation_or_renewal_needed=${{ needs.check_certs.outputs.certificate_creation_or_renewal_needed }}"
 
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -82,6 +83,6 @@ jobs:
   # Trigger create_certs.yml if nuke_certs ran or if certificate expired
   trigger_create_certs:
     needs: [check_certs, nuke_certs]
-    if: ${{ needs.check_certs.outputs.cert_expired == 'true' || needs.nuke_certs.conclusion == 'success' }}
+    if: ${{ needs.check_certs.outputs.certificate_creation_or_renewal_needed == 'true' || needs.nuke_certs.conclusion == 'success' }}
     uses: ./.github/workflows/create_certs.yml
     secrets: inherit
