@@ -298,49 +298,55 @@ platform :ios do
   
     # Filter for Distribution Certificates
     distribution_certs = certificates.select { |cert| cert.certificate_type == "DISTRIBUTION" }
-
-    # Get expiration warning days from ENV or default to 30
-    expiration_warning_days = (ENV['EXPIRATION_WARNING_DAYS'] || 30).to_i
-
-    # Check for expiration
-    distribution_certs.each do |cert|
-      expiration_date = Time.parse(cert.expiration_date)
-
-      puts "Checking Distribution Certificate: #{cert.id}, Expiration: #{expiration_date}"
-
-      if expiration_date < Time.now
-        puts "❌ Certificate #{cert.id} is already expired!"
-        expired_certificate_found = true
-      elsif expiration_date < Time.now + expiration_warning_days * 24 * 60 * 60
-        puts "⚠️ Certificate #{cert.id} is expiring within #{expiration_warning_days} days! ☠️ Nuking the certificate! ☠️"
-        expired_certificate_found = true
-      else
-        puts "✅ Certificate #{cert.id} is valid, and will not expire during the next #{expiration_warning_days} days"
+  
+    # Handle case where no distribution certificates are found
+    if distribution_certs.empty?
+      puts "⚠️ No distribution certificates found! Triggering workflow to create new certificates."
+      expired_certificate_found = true
+    else
+      # Get expiration warning days from ENV or default to 30
+      expiration_warning_days = (ENV['EXPIRATION_WARNING_DAYS'] || 30).to_i
+  
+      # Check for expiration
+      distribution_certs.each do |cert|
+        expiration_date = Time.parse(cert.expiration_date)
+  
+        puts "Checking Distribution Certificate: #{cert.id}, Expiration: #{expiration_date}"
+  
+        if expiration_date < Time.now
+          puts "❌ Certificate #{cert.id} is already expired!"
+          expired_certificate_found = true
+        elsif expiration_date < Time.now + expiration_warning_days * 24 * 60 * 60
+          puts "⚠️ Certificate #{cert.id} is expiring within #{expiration_warning_days} days! ☠️ Nuking the certificate! ☠️"
+          expired_certificate_found = true
+        else
+          puts "✅ Certificate #{cert.id} is valid, and will not expire during the next #{expiration_warning_days} days"
+        end
       end
     end
-
+  
     # Write result to cert_expired.txt
     file_path = File.expand_path('cert_expired.txt')
     File.write(file_path, expired_certificate_found ? 'true' : 'false')
-
+  
     # Log the absolute path of the file
     puts "Absolute path of cert_expired.txt: #{file_path}"
-
+  
     # Log the initial content of cert_expired.txt for debugging
     cert_expired_content = File.read(file_path)
-    puts "Initial contents of cert_expired.txt: #{cert_expired_content}" 
-
+    puts "Initial contents of cert_expired.txt: #{cert_expired_content}"
+  
     # Handle output for triggering workflow
     if expired_certificate_found
-      puts "❌ At least one certificate is expired. Creating flag file to trigger workflow."
+      puts "❌ At least one certificate is expired or no certificates found. Creating flag file to trigger workflow."
       File.write('cert_expired.txt', 'true')
     else
-      puts "✅ No certificates are expired. No action required."
+      puts "✅ No certificates are expired or missing. No action required."
       File.write('cert_expired.txt', 'false')
     end
   
     # Ensure the content is logged again after final write
     final_content = File.read('cert_expired.txt')
     puts "Final contents of cert_expired.txt: #{final_content}"
-  end  
+  end
 end
