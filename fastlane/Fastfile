@@ -298,17 +298,20 @@ platform :ios do
   
     # Filter for Distribution Certificates
     distribution_certs = certificates.select { |cert| cert.certificate_type == "DISTRIBUTION" }
-  
+
+    # Get expiration warning days from ENV or default to 30
+    expiration_warning_days = (ENV['EXPIRATION_WARNING_DAYS'] || 30).to_i
+
     # Check for expiration
     distribution_certs.each do |cert|
       expiration_date = Time.parse(cert.expiration_date)
-  
+
       puts "Checking Distribution Certificate: #{cert.id}, Expiration: #{expiration_date}"
-  
+
       if expiration_date < Time.now
         puts "❌ Certificate #{cert.id} is already expired!"
         expired_certificate_found = true
-      elsif expiration_date < Time.now + 30 * 24 * 60 * 60
+      elsif expiration_date < Time.now + expiration_warning_days * 24 * 60 * 60
         puts "⚠️ Certificate #{cert.id} is expiring soon!"
       else
         puts "✅ Certificate #{cert.id} is valid."
