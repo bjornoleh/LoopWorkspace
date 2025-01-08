@@ -312,7 +312,8 @@ platform :ios do
         puts "❌ Certificate #{cert.id} is already expired!"
         expired_certificate_found = true
       elsif expiration_date < Time.now + expiration_warning_days * 24 * 60 * 60
-        puts "⚠️ Certificate #{cert.id} is expiring within #{expiration_warning_days} days!"
+        puts "⚠️ Certificate #{cert.id} is expiring within #{expiration_warning_days} days! ☠️ Nuking the certificate! ☠️"
+        expired_certificate_found = true
       else
         puts "✅ Certificate #{cert.id} is valid, and will not expire during the next #{expiration_warning_days} days"
       end
