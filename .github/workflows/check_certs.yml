@@ -12,7 +12,7 @@ jobs:
       FASTLANE_KEY_ID: ${{ secrets.FASTLANE_KEY_ID }}
       FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
     outputs:
-      cert_revoked: ${{ steps.set_output.outputs.cert_revoked }} # Job-level output
+      cert_expired: ${{ steps.set_output.outputs.cert_expired }} # Job-level output for expired certificates
 
     steps:
       - name: Checkout repository
@@ -26,18 +26,23 @@ jobs:
       - name: Install dependencies
         run: bundle install
 
-      - name: Check and Revoke Certificates
+      - name: Check Certificates
         env:
           FASTLANE_USER: ${{ secrets.APPLE_ID }}
           FASTLANE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-        run: bundle exec fastlane check_and_revoke_certificates
+        run: bundle exec fastlane check_and_notify_certificates
         id: check_certs
 
       - name: Set output based on Fastlane result
         id: set_output
-        run: echo "::set-output name=cert_revoked::$(cat cert_revoked.txt)" # Output from Fastlane saved to a file
+        run: |
+          if [ -f cert_expired.txt ]; then
+            echo "cert_expired=$(cat cert_expired.txt)" >> $GITHUB_ENV
+          else
+            echo "cert_expired=false" >> $GITHUB_ENV
+          fi
 
   trigger_create_certs:
     needs: check_certs
-    if: ${{ needs.check_certs.outputs.cert_revoked == 'true' }}
+    if: ${{ needs.check_certs.outputs.cert_expired == 'true' }}
     uses: ./.github/workflows/create_certs.yml
