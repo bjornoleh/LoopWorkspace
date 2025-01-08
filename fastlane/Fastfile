@@ -291,7 +291,7 @@ platform :ios do
     )
   
     # Initialize flag to track if any certificates are expired
-    expired_certificate_found = false
+    certificate_creation_or_renewal_needed = false
   
     # Fetch all certificates
     certificates = Spaceship::ConnectAPI::Certificate.all
@@ -305,7 +305,7 @@ platform :ios do
       certificate_creation_or_renewal_needed = true
     else
       # Get expiration warning days from ENV or default to 7
-      expiration_warning_days = (ENV['EXPIRATION_WARNING_DAYS'] || 30).to_i
+      expiration_warning_days = (ENV['EXPIRATION_WARNING_DAYS'] || 7).to_i
   
       # Check for expiration
       distribution_certs.each do |cert|
@@ -332,10 +332,8 @@ platform :ios do
     # Handle output for triggering workflow
     if certificate_creation_or_renewal_needed
       puts "❌ Certificate is expired or no certificates found. Creating flag file to trigger renewal or creation of certificate."
-      File.write('certificate_creation_or_renewal_needed.txt', 'true')
     else
       puts "✅ No certificates are expired or missing. No action required."
-      File.write('certificate_creation_or_renewal_needed.txt', 'false')
     end
   
     # Log the absolute path and contents of the certificate_creation_or_renewal_needed.txt file
