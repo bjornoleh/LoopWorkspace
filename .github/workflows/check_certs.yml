@@ -42,7 +42,37 @@ jobs:
             echo "cert_expired=false" >> $GITHUB_ENV
           fi
 
-  trigger_create_certs:
+  # Nuke Certs if no valid certificate or certificate was nuked
+  nuke_certs:
     needs: check_certs
-    if: ${{ needs.check_certs.outputs.cert_expired == 'true' }}
+    runs-on: macos-14  # This needs to run on macOS for Fastlane
+    if: ${{ needs.check_certs.outputs.cert_expired == 'true' }}  # Only run if certificate is expired or invalid
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'
+
+      - name: Install dependencies
+        run: bundle install
+
+      - name: Run Fastlane nuke_certs
+        run: fastlane nuke_certs
+        env:
+          TEAMID: ${{ secrets.TEAMID }}
+          GH_PAT: ${{ secrets.GH_PAT }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          FASTLANE_USER: ${{ secrets.FASTLANE_USER }}
+          FASTLANE_KEY_ID: ${{ secrets.FASTLANE_KEY_ID }}
+          FASTLANE_ISSUER_ID: ${{ secrets.FASTLANE_ISSUER_ID }}
+          FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
+          FASTLANE_SKIP_ALL_LANE_SUMMARIES: "true"
+
+  # Trigger create_certs.yml if nuke_certs ran or if certificate expired
+  trigger_create_certs:
+    needs: [check_certs, nuke_certs]
+    if: ${{ needs.check_certs.outputs.cert_expired == 'true' || needs.nuke_certs.conclusion == 'success' }}
     uses: ./.github/workflows/create_certs.yml
