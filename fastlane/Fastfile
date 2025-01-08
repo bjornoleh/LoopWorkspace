@@ -282,29 +282,29 @@ platform :ios do
   lane :check_and_notify_certificates do
     setup_ci if ENV['CI']
     ENV["MATCH_READONLY"] = false.to_s
-
+  
     # Authenticate using App Store Connect API Key
     api_key = app_store_connect_api_key(
       key_id: ENV["FASTLANE_KEY_ID"],
       issuer_id: ENV["FASTLANE_ISSUER_ID"],
       key_content: ENV["FASTLANE_KEY"] # Ensure valid key content
     )
-
+  
     # Initialize flag to track if any certificates are expired
     expired_certificate_found = false
-
+  
     # Fetch all certificates
     certificates = Spaceship::ConnectAPI::Certificate.all
-
+  
     # Filter for Distribution Certificates
     distribution_certs = certificates.select { |cert| cert.certificate_type == "DISTRIBUTION" }
-
+  
     # Check for expiration
     distribution_certs.each do |cert|
       expiration_date = Time.parse(cert.expiration_date)
-
+  
       puts "Checking Distribution Certificate: #{cert.id}, Expiration: #{expiration_date}"
-
+  
       if expiration_date < Time.now
         puts "❌ Certificate #{cert.id} is already expired!"
         expired_certificate_found = true
@@ -316,7 +316,15 @@ platform :ios do
     end
 
     # Write result to cert_expired.txt
-    File.write('cert_expired.txt', expired_certificate_found ? 'true' : 'false')
+    file_path = File.expand_path('cert_expired.txt')
+    File.write(file_path, expired_certificate_found ? 'true' : 'false')
+
+    # Log the absolute path of the file
+    puts "Absolute path of cert_expired.txt: #{file_path}"
+
+    # Log the initial content of cert_expired.txt for debugging
+    cert_expired_content = File.read(file_path)
+    puts "Initial contents of cert_expired.txt: #{cert_expired_content}" 
 
     # Handle output for triggering workflow
     if expired_certificate_found
@@ -326,5 +334,9 @@ platform :ios do
       puts "✅ No certificates are expired. No action required."
       File.write('cert_expired.txt', 'false')
     end
-  end
+  
+    # Ensure the content is logged again after final write
+    final_content = File.read('cert_expired.txt')
+    puts "Final contents of cert_expired.txt: #{final_content}"
+  end  
 end
