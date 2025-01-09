@@ -4,9 +4,6 @@ run-name: Check Certificates (${{ github.ref_name }})
 on:
   workflow_dispatch:
 
-env:
-  #EXPIRATION_WARNING_DAYS: 700
-
 jobs:
   check_certs:
     runs-on: ubuntu-latest
