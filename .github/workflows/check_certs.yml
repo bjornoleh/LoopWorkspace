@@ -15,7 +15,7 @@ jobs:
       FASTLANE_KEY_ID: ${{ secrets.FASTLANE_KEY_ID }}
       FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
     outputs:
-      certificate_creation_or_renewal_needed: ${{ steps.set_output.outputs.certificate_creation_or_renewal_needed }}
+      new_certificate_needed: ${{ steps.set_output.outputs.new_certificate_needed }}
 
     steps:
       - name: Checkout repository
@@ -39,24 +39,24 @@ jobs:
       - name: Set output based on Fastlane result
         id: set_output
         run: |
-          CERT_STATUS_FILE="/home/runner/work/LoopWorkspace/LoopWorkspace/fastlane/certificate_creation_or_renewal_needed.txt"
+          CERT_STATUS_FILE="/home/runner/work/LoopWorkspace/LoopWorkspace/fastlane/new_certificate_needed.txt"
           if [ -f "$CERT_STATUS_FILE" ]; then
             CERT_STATUS=$(cat "$CERT_STATUS_FILE" | tr -d '\n' | tr -d '\r') # Read file content and strip newlines
-            echo "Certificate creation or renewal needed: $CERT_STATUS"
-            echo "certificate_creation_or_renewal_needed=$CERT_STATUS" >> $GITHUB_OUTPUT
+            echo "new_certificate_needed: $CERT_STATUS"
+            echo "new_certificate_needed=$CERT_STATUS" >> $GITHUB_OUTPUT
           else
             echo "Certificate status file not found. Defaulting to false."
-            echo "certificate_creation_or_renewal_needed=false" >> $GITHUB_OUTPUT
+            echo "new_certificate_needed=false" >> $GITHUB_OUTPUT
           fi
 
   # Nuke Certs if no valid certificate or certificate was nuked
   nuke_certs:
     needs: check_certs
     runs-on: macos-14  # This needs to run on macOS for Fastlane
-    if: ${{ needs.check_certs.outputs.certificate_creation_or_renewal_needed == 'true' }}  # Only run if certificate is expired or invalid
+    if: ${{ needs.check_certs.outputs.new_certificate_needed == 'true' }}  # Only run if certificate is expired or invalid
     steps:
       - name: Debug check_certs output
-        run: echo "certificate_creation_or_renewal_needed=${{ needs.check_certs.outputs.certificate_creation_or_renewal_needed }}"
+        run: echo "new_certificate_needed=${{ needs.check_certs.outputs.new_certificate_needed }}"
 
       - name: Checkout repository
         uses: actions/checkout@v3
