@@ -49,11 +49,11 @@ jobs:
             echo "new_certificate_needed=false" >> $GITHUB_OUTPUT
           fi
 
-  # Nuke Certs if no valid certificate or certificate was nuked
+  # Nuke Certs if needed
   nuke_certs:
     needs: check_certs
-    runs-on: macos-14  # This needs to run on macOS for Fastlane
-    if: ${{ needs.check_certs.outputs.new_certificate_needed == 'true' }}  # Only run if certificate is expired or invalid
+    runs-on: macos-14 
+    if: ${{ needs.check_certs.outputs.new_certificate_needed == 'true' }}
     steps:
       - name: Debug check_certs output
         run: echo "new_certificate_needed=${{ needs.check_certs.outputs.new_certificate_needed }}"
@@ -81,7 +81,7 @@ jobs:
           FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
           FASTLANE_SKIP_ALL_LANE_SUMMARIES: "true"
 
-  # Trigger create_certs.yml if nuke_certs ran or if certificate was missing
+  # Trigger create_certs.yml if nuke_certs ran
   trigger_create_certs:
     needs: [check_certs, nuke_certs]
     uses: ./.github/workflows/create_certs.yml

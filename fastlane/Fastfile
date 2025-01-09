@@ -278,7 +278,7 @@ platform :ios do
     )
   end
 
-  desc "Check Certificates and Trigger Workflow for Expired Certificates"
+  desc "Check Certificates and Trigger Workflow for Expired or Missing Certificates"
   lane :check_and_renew_certificates do
     setup_ci if ENV['CI']
     ENV["MATCH_READONLY"] = false.to_s
@@ -290,7 +290,7 @@ platform :ios do
       key_content: ENV["FASTLANE_KEY"] # Ensure valid key content
     )
   
-    # Initialize flag to track if any certificates are expired
+    # Initialize flag to track if renewall of certificates is needed
     new_certificate_needed = false
   
     # Fetch all certificates
@@ -332,11 +332,21 @@ platform :ios do
     # Handle output for triggering workflow
     if new_certificate_needed
       puts "❌ Certificate is expired or no certificates found. Creating flag file to trigger renewal or creation of certificate."
+      puts ""
+      puts "⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️"
+      puts "⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️"
+      puts "⚠️⚠️⚠️⚠️⚠️   Any previously existing Distribution certificates and TestFlight profiles is being revoked.              ⚠️⚠️⚠️⚠️⚠️"
+      puts "⚠️⚠️⚠️⚠️⚠️   If you have other apps being distributed by GitHub Actions / Fastlane / TestFlight,                      ⚠️⚠️⚠️⚠️⚠️"
+      puts "⚠️⚠️⚠️⚠️⚠️   please run the '3. Create Certificates' workflow for each of these apps to allow these apps to be built. ⚠️⚠️⚠️⚠️⚠️"
+      puts "⚠️⚠️⚠️⚠️⚠️                                                                                                            ⚠️⚠️⚠️⚠️⚠️"
+      puts "⚠️⚠️⚠️⚠️⚠️   But don't worry about your existing TestFlight builds, they will keep working! ✅                        ⚠️⚠️⚠️⚠️⚠️"
+      puts "⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️"
     else
       puts "✅ No certificates are expired or missing. No action required."
     end
   
     # Log the absolute path and contents of the new_certificate_needed.txt file
+    puts ""
     puts "Absolute path of new_certificate_needed.txt: #{file_path}"
     new_certificate_needed_content = File.read(file_path)
     puts "Certificate creation or renewal needed: #{new_certificate_needed_content}"
