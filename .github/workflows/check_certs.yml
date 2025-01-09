@@ -41,10 +41,11 @@ jobs:
         run: |
           CERT_STATUS_FILE="/home/runner/work/LoopWorkspace/LoopWorkspace/fastlane/certificate_creation_or_renewal_needed.txt"
           if [ -f "$CERT_STATUS_FILE" ]; then
-            echo "Certificate creation or renewal needed:"
-            cat "$CERT_STATUS_FILE"
-            echo "certificate_creation_or_renewal_needed=$CERT_STATUS_FILE" >> $GITHUB_OUTPUT
+            CERT_STATUS=$(cat "$CERT_STATUS_FILE" | tr -d '\n' | tr -d '\r') # Read file content and strip newlines
+            echo "Certificate creation or renewal needed: $CERT_STATUS"
+            echo "certificate_creation_or_renewal_needed=$CERT_STATUS" >> $GITHUB_OUTPUT
           else
+            echo "Certificate status file not found. Defaulting to false."
             echo "certificate_creation_or_renewal_needed=false" >> $GITHUB_OUTPUT
           fi
 
