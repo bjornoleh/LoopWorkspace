@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 env:
-  #EXPIRATION_WARNING_DAYS: 700
+  EXPIRATION_WARNING_DAYS: 7
 
 jobs:
   check_certs:
