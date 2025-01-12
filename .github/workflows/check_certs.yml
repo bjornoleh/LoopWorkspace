@@ -20,6 +20,7 @@ jobs:
     secrets: inherit
 
   check_certs:
+    needs: validate
     runs-on: macos-14
     outputs:
       new_certificate_needed: ${{ steps.set_output.outputs.new_certificate_needed }}
