@@ -234,7 +234,7 @@ platform :ios do
           "com.#{TEAMID}.loopkit.Loop.LoopWidgetExtension",
         ]
       )
-      UI.message("Provisioning profiles are valid and up-to-date.")
+      ###UI.message("Provisioning profiles are valid and up-to-date.")
     rescue => e
       # Fallback to update profiles if an issue is detected
       UI.message("Profiles are out of sync or invalid. Updating...")
@@ -252,7 +252,7 @@ platform :ios do
           "com.#{TEAMID}.loopkit.Loop.LoopWidgetExtension",
         ]
       )
-      UI.message("Provisioning profiles have been updated.")
+      ###UI.message("Provisioning profiles have been updated.")
     end
   end
 
