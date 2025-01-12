@@ -5,14 +5,16 @@ on: [workflow_call, workflow_dispatch]
 
 env:
   EXPIRATION_WARNING_DAYS: 7
+  TEAMID: ${{ secrets.TEAMID }}
+  GH_PAT: ${{ secrets.GH_PAT }}
+  MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+  FASTLANE_KEY_ID: ${{ secrets.FASTLANE_KEY_ID }}
+  FASTLANE_ISSUER_ID: ${{ secrets.FASTLANE_ISSUER_ID }}
+  FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
 
 jobs:
   check_certs:
     runs-on: ubuntu-latest
-    env:
-      FASTLANE_ISSUER_ID: ${{ secrets.FASTLANE_ISSUER_ID }}
-      FASTLANE_KEY_ID: ${{ secrets.FASTLANE_KEY_ID }}
-      FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
     outputs:
       new_certificate_needed: ${{ steps.set_output.outputs.new_certificate_needed }}
 
@@ -44,14 +46,6 @@ jobs:
           else
             echo "::notice title=Provisioning Profiles::Completed, but no specific action could be determined."
           fi
-
-        env:
-          TEAMID: ${{ secrets.TEAMID }}
-          GH_PAT: ${{ secrets.GH_PAT }}
-          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-          FASTLANE_KEY_ID: ${{ secrets.FASTLANE_KEY_ID }}
-          FASTLANE_ISSUER_ID: ${{ secrets.FASTLANE_ISSUER_ID }}
-          FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
 
       - name: Check Distribution Certificate and create or renew if needed
         run: bundle exec fastlane check_and_renew_certificates
@@ -115,15 +109,6 @@ jobs:
 
       - name: Run Fastlane nuke_certs
         run: bundle exec fastlane nuke_certs
-        env:
-          TEAMID: ${{ secrets.TEAMID }}
-          GH_PAT: ${{ secrets.GH_PAT }}
-          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-          FASTLANE_USER: ${{ secrets.FASTLANE_USER }}
-          FASTLANE_KEY_ID: ${{ secrets.FASTLANE_KEY_ID }}
-          FASTLANE_ISSUER_ID: ${{ secrets.FASTLANE_ISSUER_ID }}
-          FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
-          FASTLANE_SKIP_ALL_LANE_SUMMARIES: "true"
 
       - name: Annotate Summary after Nuke
         run: |
