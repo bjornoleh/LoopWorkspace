@@ -157,7 +157,7 @@ jobs:
   # Builds Loop
   build:
     name: Build
-    needs: [check_alive_and_permissions, check_latest_from_upstream, check_certs]
+    needs: [check_certs, check_alive_and_permissions, check_latest_from_upstream]
     runs-on: macos-14
     permissions:
       contents: write
