@@ -7,6 +7,7 @@ env:
   EXPIRATION_WARNING_DAYS: 7
   TEAMID: ${{ secrets.TEAMID }}
   GH_PAT: ${{ secrets.GH_PAT }}
+  GH_TOKEN: ${{ secrets.GH_PAT }}
   MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
   FASTLANE_KEY_ID: ${{ secrets.FASTLANE_KEY_ID }}
   FASTLANE_ISSUER_ID: ${{ secrets.FASTLANE_ISSUER_ID }}
