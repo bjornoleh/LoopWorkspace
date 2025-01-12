@@ -68,6 +68,12 @@ jobs:
             echo "::warning::‼️ Nuking of certificates was forced because the repository variable FORCE_NUKE_CERTS is set to 'true'."
           fi
 
+  # Trigger create_certs.yml to check and create provisioning profiles if needed
+  check_profiles:
+    needs: [check_certs]
+    uses: ./.github/workflows/create_certs.yml
+    secrets: inherit
+
   # Nuke Certs if needed, and if the repository variable ENABLE_NUKE_CERTS is set to 'true', or if FORCE_NUKE_CERTS is set to 'true', which will always force certs to be nuked
   nuke_certs:
     needs: check_certs
