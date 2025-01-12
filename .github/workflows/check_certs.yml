@@ -15,7 +15,7 @@ env:
 
 jobs:
   check_certs:
-    runs-on: ubuntu-latest
+    runs-on: macos-14
     outputs:
       new_certificate_needed: ${{ steps.set_output.outputs.new_certificate_needed }}
 
