@@ -45,8 +45,7 @@ jobs:
       - name: Check certificate and profiles
         run: |
           echo "Running Fastlane certs lane..."
-          bundle exec fastlane certs
-        continue-on-error: true
+          bundle exec fastlane certs || true # ignore and continue on errors without annotating an exit code
 
       - name: Check Distribution Certificate and create or renew if needed
         run: bundle exec fastlane check_and_renew_certificates
