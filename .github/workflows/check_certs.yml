@@ -46,6 +46,7 @@ jobs:
         run: |
           echo "Running Fastlane certs lane..."
           bundle exec fastlane certs
+        continue-on-error: true
 
       - name: Check Distribution Certificate and create or renew if needed
         run: bundle exec fastlane check_and_renew_certificates
