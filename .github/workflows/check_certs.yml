@@ -102,19 +102,14 @@ jobs:
             set -e
             bundle exec fastlane nuke_certs
 
-        - name: Add warning annotations for nuke_certs
-          if: ${{ success() }}
-          run: |
-            echo "::warning::⚠️⚠️⚠️ All Distribution certificates and TestFlight profiles have been revoked."
-
         - name: Recreate Distribution certificate after nuking
           run: |
             set -e
             bundle exec fastlane certs
 
-        - name: Add success annotations for certificate recreation
+        - name: Add success annotations for nuke and certificate recreation
           if: ${{ success() }}
           run: |
-            echo "::warning::⚠️⚠️⚠️ Certificates have been recreated successfully."
-            echo "::warning::❗️❗️❗️ If you have other apps being distributed by GitHub Actions / Fastlane / TestFlight that does not renew certificates automatically, please run the '3. Create Certificates' workflow for each of these apps to allow these apps to be built."
-            echo "::warning::✅✅✅ But don't worry about your existing TestFlight builds, they will keep working!"
+            echo "::warning::⚠️ All Distribution certificates and TestFlight profiles have been revoked and recreated."
+            echo "::warning::❗️ If you have other apps being distributed by GitHub Actions / Fastlane / TestFlight that does not renew certificates automatically, please run the '3. Create Certificates' workflow for each of these apps to allow these apps to be built."
+            echo "::warning::✅ But don't worry about your existing TestFlight builds, they will keep working!"
