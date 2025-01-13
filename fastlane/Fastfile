@@ -308,7 +308,7 @@ platform :ios do
       distribution_certs.each do |cert|
         expiration_date = Time.parse(cert.expiration_date)
   
-        STDOUT.puts "::notice::Distribution Certificate: #{cert.id}, Expiration date: #{expiration_date}"
+        STDOUT.puts "::notice::Current Distribution Certificate: #{cert.id}, Expiration date: #{expiration_date}"
   
         if expiration_date < Time.now
           STDOUT.puts "::notice::Distribution Certificate #{cert.id} is expired! Triggering action to renew certificate."
