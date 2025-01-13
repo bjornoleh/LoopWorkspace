@@ -4,7 +4,6 @@ run-name: Check Certificates (${{ github.ref_name }})
 on: [workflow_call, workflow_dispatch]
 
 env:
-  EXPIRATION_WARNING_DAYS: 7
   TEAMID: ${{ secrets.TEAMID }}
   GH_PAT: ${{ secrets.GH_PAT }}
   GH_TOKEN: ${{ secrets.GH_PAT }}
