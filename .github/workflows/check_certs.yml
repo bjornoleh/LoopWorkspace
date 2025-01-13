@@ -45,27 +45,7 @@ jobs:
       - name: Check certificate and profiles
         run: |
           echo "Running Fastlane certs lane..."
-          bundle exec fastlane certs --verbose 2>&1 | tee output.log
-
-          # Check Fastlane output for Certificate
-          if grep -q -E "Your certificate .* is valid" output.log; then
-            echo "::notice title=Distribution Certificate::Your Distribution certificate is valid"
-
-          elif grep -q "Couldn't find a valid code signing identity for distribution... creating one for you now" output.log; then
-            echo "::notice title=Distribution Certificate::Couldn't find a valid Distribution certificate, creating one for you now."
-          fi
-
-          # Check Fastlane output for Profiles
-          if grep -q "No existing profiles found, that match the certificates you have installed locally! Creating a new provisioning profile for you" output.log; then
-            echo "::notice title=Provisioning Profiles::No existing profiles found, creating new provisioning profiles for you."
-
-          elif grep -q "Updated appstore and platform ios" output.log; then
-            echo "::notice title=Provisioning Profiles::Profiles have been successfully updated."
-
-          elif grep -q "(stored in your storage) is not available on the Developer Portal" output.log; then
-            echo "::notice title=Provisioning Profiles::The certificate in your Match-Secrets repository is not available on the Developer Portal"
-          fi
-
+          bundle exec fastlane certs
 
       - name: Check Distribution Certificate and create or renew if needed
         run: bundle exec fastlane check_and_renew_certificates
