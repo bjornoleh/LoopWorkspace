@@ -19,7 +19,7 @@ jobs:
     secrets: inherit
 
   create_certs:
-    name: Check certificates
+    name: Certificates
     needs: validate
     runs-on: macos-14
     outputs:
